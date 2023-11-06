@@ -152,18 +152,11 @@ class SIM800L:
         self.serial.write(b'AT+CSPN?\r\n')
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
-            print(serial_buffer)
-            
             match = re.search(r'\+CSPN: "([^"]+)"', serial_buffer)
             if match:
-                service_provider = match.group(1)
+                service_provider = match.group(0)
                 return service_provider
             return -1
-        
-            # serial_buffer  = serial_buffer.replace('AT+CIMI', '')
-            # serial_buffer  = serial_buffer.replace('OK', '')
-            service_provider = serial_buffer
-            return service_provider.strip()
         return -1
 
 
