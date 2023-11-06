@@ -56,11 +56,12 @@ class SIM800L:
         if 'OK' in serial_buffer:
             serial_buffer = serial_buffer.replace('AT+CCID', '')
             serial_buffer = serial_buffer.replace('OK', '')
-            match = re.search(r'(\w+)', serial_buffer)
-            if match:
-                iccid = match.group(0)
-                return iccid.strip()
-            return -1
+            serial_buffer.strip()
+            # match = re.search(r'(\w+)', serial_buffer)
+            # if match:
+            #     iccid = match.group(0)
+            #     return iccid.strip()
+            # return -1
         return -1
     
     def device_information(self):
@@ -76,11 +77,12 @@ class SIM800L:
         if 'OK' in serial_buffer:
             serial_buffer = serial_buffer.replace('ATI', '')
             serial_buffer = serial_buffer.replace('OK', '')
-            match = re.search(r'(\w+)', serial_buffer)
-            if match:
-                iccid = match.group(0)
-                return iccid.strip()
-            return -1
+            serial_buffer.strip()
+            # match = re.search(r'(\w+)', serial_buffer)
+            # if match:
+            #     iccid = match.group(0)
+            #     return iccid.strip()
+            # return -1
         return -1
         
 
