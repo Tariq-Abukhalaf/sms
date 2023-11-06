@@ -160,7 +160,7 @@ class SIM800L:
                 return service_provider.upper()
             return -1
         return -1
-    
+    @tic
     def network(self):
         """
             AT command is used to Check the current network
