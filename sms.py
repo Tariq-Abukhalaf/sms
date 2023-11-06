@@ -30,6 +30,7 @@ class SIM800L:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
 
+    @tic
     def signal_strength(self):
         """
             AT command returns the signal strength of the device.
@@ -49,6 +50,7 @@ class SIM800L:
             return -1
         return -1
     
+    @tic
     def iccid(self):
         """
             AT command is used to read the ICCID from the SIM.
@@ -64,6 +66,7 @@ class SIM800L:
             return iccid.strip()
         return -1
     
+    @tic
     def device_information(self):
         """
             AT command to get device information
@@ -79,6 +82,7 @@ class SIM800L:
             return device_information.strip().upper()
         return -1
     
+    @tic
     def modem_name(self):
         """
             ex: SIM800
@@ -87,7 +91,7 @@ class SIM800L:
         parts = modem_name.split(' ')
         return parts[0].upper()
 
-    
+    @tic
     def sim_status(self):
         """
             AT command for SIM presence and status
@@ -104,6 +108,7 @@ class SIM800L:
             return sim_status.strip().upper()
         return -1
     
+    @tic
     def sim_response(self):
         """
             AT command for check communication between the module and the computer.
@@ -118,6 +123,7 @@ class SIM800L:
             return sim_response.strip().upper()
         return -1
     
+    @tic
     def imsi(self):
         """
             AT command returns IMSI (International Mobile Subscriber Identity) of the mobile terminal.
@@ -133,6 +139,7 @@ class SIM800L:
             return imsi.strip()
         return -1
     
+    @tic
     def mcc_mnc_digit(self,mcn_digit=2):
         """
             The first 3 digits of the IMSI represent the MCC (Mobile Country Code).
@@ -160,6 +167,7 @@ class SIM800L:
                 return service_provider.upper()
             return -1
         return -1
+    
     @tic
     def network(self):
         """
