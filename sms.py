@@ -30,7 +30,7 @@ class SIM800L:
 
     def signal_strength(self):
         self.clear_serial()
-        self.serial.write(b'AT+CSQ\r')
+        self.serial.write(b'AT+CSQ')
         serial_buffer = self.read_serial()
         print(serial_buffer)
         if 'OK' in serial_buffer:
