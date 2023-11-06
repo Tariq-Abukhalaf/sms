@@ -34,7 +34,8 @@ class SIM800L:
             AT command returns the signal strength of the device.
             <min>: 2
             <max>: 31
-            return ratio of 100%  
+            return ratio of 100% 
+            ex:0.97
         """
         self.clear_serial()
         self.serial.write(b'AT+CSQ\r\n')
@@ -50,6 +51,7 @@ class SIM800L:
     def iccid(self):
         """
             AT command is used to read the ICCID from the SIM.
+            ex: 8996277010560617686f
         """
         self.clear_serial()
         self.serial.write(b'AT+CCID\r\n')
@@ -64,6 +66,7 @@ class SIM800L:
     def device_information(self):
         """
             AT commands to get device information
+            ex: SIM800 R14.18
         """
         self.clear_serial()
         self.serial.write(b'ATI\r\n')
@@ -78,9 +81,26 @@ class SIM800L:
     def sim_status(self):
         """
             AT commands for SIM presence and status
+            ex: READY
         """
         self.clear_serial()
         self.serial.write(b'AT+CPIN?\r\n')
+        serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            serial_buffer      = serial_buffer.replace('AT+CPIN?', '')
+            serial_buffer      = serial_buffer.replace('OK', '')
+            serial_buffer      = serial_buffer.replace('+CPIN: ', '')
+            sim_status         = serial_buffer
+            return sim_status.strip()
+        return -1
+    
+    def sim_response(self):
+        """
+            AT commands for check communication between the module and the computer.
+            ex: READY
+        """
+        self.clear_serial()
+        self.serial.write(b'AT\r\n')
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
             serial_buffer      = serial_buffer.replace('AT+CPIN?', '')
@@ -110,5 +130,8 @@ print(f'Device Information: {device_information}')
 
 sim_status = sim800.sim_status()
 print(f'Sim Status: {sim_status}')
+
+sim_response = sim800.sim_response()
+print(f'Sim Response: {sim_response}')
 
 sim800.close()
