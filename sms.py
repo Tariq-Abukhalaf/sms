@@ -154,7 +154,7 @@ class SIM800L:
         if 'OK' in serial_buffer:
             match = re.search(r'\+CSPN: "([^"]+)"', serial_buffer)
             if match:
-                service_provider = match.group(0)
+                service_provider = match.group(1)
                 return service_provider
             return -1
         return -1
