@@ -184,7 +184,9 @@ class SIM800L:
                 return network.upper()
             return -1
         return -1
-       
+
+
+start_time = time.time() 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
@@ -220,3 +222,7 @@ network = sim800.network()
 print(f'Network : {network}')
 
 sim800.close()
+
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"took {elapsed_time:.6f} seconds to execute.")
