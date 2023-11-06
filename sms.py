@@ -32,7 +32,8 @@ class SIM800L:
         """
             AT command returns the signal strength of the device.
             <min>: 2
-            <max>: 31  
+            <max>: 31
+            return ratio of 100%  
         """
         self.clear_serial()
         self.serial.write(b'AT+CSQ\r\n')
@@ -43,6 +44,22 @@ class SIM800L:
             if match:
                 signal_strength = int(match.group(1))
                 return round(signal_strength/31,2)
+            return -1
+        return -1
+    
+    def iccid(self):
+        """
+            AT command is used to read the ICCID from the SIM.
+        """
+        self.clear_serial()
+        self.serial.write(b'AT+CCID\r\n')
+        serial_buffer = self.read_serial()
+        print(serial_buffer)
+        if 'OK' in serial_buffer:
+            match = re.search(r'(\d+)', serial_buffer)
+            if match:
+                iccid = int(match.group(1))
+                return iccid
             return -1
         return -1
         
