@@ -15,9 +15,8 @@ class SIM800L:
 
     def read_serial(self):
         while not self.serial.in_waiting:
-            print('h1')
             time.sleep(0.01)
-        print(self.serial.in_waiting)
+
         if self.serial.in_waiting:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
@@ -58,14 +57,8 @@ class SIM800L:
         if 'OK' in serial_buffer:
             serial_buffer = serial_buffer.replace('AT+CCID', '')
             serial_buffer = serial_buffer.replace('OK', '')
-            serial_buffer.strip()
-            iccid = serial_buffer
+            iccid         = serial_buffer
             return iccid.strip()
-            # match = re.search(r'(\w+)', serial_buffer)
-            # if match:
-            #     iccid = match.group(0)
-            #     return iccid.strip()
-            # return -1
         return -1
     
     def device_information(self):
@@ -75,17 +68,19 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(b'ATI\r\n')
         serial_buffer = self.read_serial()
-        print('***',end='\n')
-        print(serial_buffer,end='\n')
-        print('***',end='\n')
         if 'OK' in serial_buffer:
-            serial_buffer = serial_buffer.replace('ATI', '')
-            serial_buffer = serial_buffer.replace('OK', '')
+            serial_buffer      = serial_buffer.replace('ATI', '')
+            serial_buffer      = serial_buffer.replace('OK', '')
             device_information = serial_buffer
             return device_information.strip()
         return -1
         
 
+
+
+# print('***',end='\n')
+# print(serial_buffer,end='\n')
+# print('***',end='\n')
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
