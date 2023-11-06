@@ -97,13 +97,27 @@ class SIM800L:
     def sim_response(self):
         """
             AT commands for check communication between the module and the computer.
-            ex: READY
+            ex: OK
         """
         self.clear_serial()
         self.serial.write(b'AT\r\n')
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
             serial_buffer      = serial_buffer.replace('AT', '')
+            sim_response         = serial_buffer
+            return sim_response.strip()
+        return -1
+    
+    def mcc_mnc(self):
+        """
+            This AT command returns IMSI (International Mobile Subscriber Identity) of the mobile terminal.
+            ex:
+        """
+        self.clear_serial()
+        self.serial.write(b'AT+CIMI\r\n')
+        serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            # serial_buffer      = serial_buffer.replace('AT', '')
             sim_response         = serial_buffer
             return sim_response.strip()
         return -1
@@ -131,5 +145,8 @@ print(f'Sim Status: {sim_status}')
 
 sim_response = sim800.sim_response()
 print(f'Sim Response: {sim_response}')
+
+mcc_mnc = sim800.mcc_mnc()
+print(f'mcc_mnc: {mcc_mnc}')
 
 sim800.close()
