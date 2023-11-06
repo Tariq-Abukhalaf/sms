@@ -154,7 +154,7 @@ class SIM800L:
         if 'OK' in serial_buffer:
             match = re.search(r'\+CSPN: (\w+),', serial_buffer)
             if match:
-                signal_strength = match.group(1)
+                signal_strength = match.group(0)
                 return signal_strength
             return -1
         
