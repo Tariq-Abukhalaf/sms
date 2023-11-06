@@ -162,7 +162,7 @@ print(f'Sim Response: {sim_response}')
 imsi = sim800.imsi()
 print(f'IMSI: {imsi}')
 
-mcc,mnc = sim800.mcc_mnc_digit()
+mcc,mnc = sim800.mcc_mnc_digit(3)
 print(f'MCC: {mcc}')
 print(f'MNC: {mnc}')
 
