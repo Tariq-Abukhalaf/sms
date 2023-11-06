@@ -39,6 +39,7 @@ class SIM800L:
             return ratio of 100% 
             ex:0.97
         """
+        time.sleep(4)
         self.clear_serial()
         self.serial.write(b'AT+CSQ\r\n')
         serial_buffer = self.read_serial()
