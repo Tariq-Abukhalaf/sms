@@ -58,7 +58,7 @@ class SIM800L:
         if 'OK' in serial_buffer:
             match = re.search(r'(\w+)', serial_buffer)
             if match:
-                iccid = int(match.group(2))
+                iccid = int(match.group(0))
                 return iccid
             return -1
         return -1
