@@ -10,19 +10,28 @@ class SIM800L:
         self.serial.flushInput()
         self.serial.flushOutput()
 
+    def close(self):
+        self.serial.close()
+
+    def _read_serial(self):
+
+        while not self.serial.in_waiting :
+            time.sleep(0.01)
+
+        if self.serial.in_waiting:
+            return self.serial.read(self.serial.in_waiting).decode('utf-8')
+        
+        return ""
+
+
     def signal_strength(self):
         self.clear_serial()
         self.serial.write(b'AT+CSQ\r\n')
-        
-        # while self.serial.in_waiting > 0:
-        #     print("Inside while")
+        serial_buffer = self._read_serial()
 
-        print(self.serial.in_waiting)
-            
-
-        time.sleep(1)
-        print(self.serial.in_waiting)
-        serial_buffer = self.serial.read(self.serial.in_waiting).decode('utf-8')
+        # time.sleep(1)
+        # print(self.serial.in_waiting)
+        # serial_buffer = self.serial.read(self.serial.in_waiting).decode('utf-8')
 
         match = re.search(r'\+CSQ: (\d+),', serial_buffer)
         if match:
@@ -35,4 +44,4 @@ sim800 = SIM800L('/dev/serial0', 115000)
 signal_strength = sim800.signal_strength()
 print(f'Signal Strength: {signal_strength}')
 
-sim800.serial.close()
+sim800.close()
