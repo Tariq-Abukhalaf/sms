@@ -33,20 +33,16 @@ class SIM800L:
         self.serial.write(b'AT+CSQ\r\n')
         serial_buffer = self.read_serial()
         print(serial_buffer)
-
-        # time.sleep(1)
-        # print(self.serial.in_waiting)
-        # serial_buffer = self.serial.read(self.serial.in_waiting).decode('utf-8')
-
-        match = re.search(r'\+CSQ: (\d+),', serial_buffer)
-        if match:
-            signal_strength = int(match.group(1))
-            return signal_strength
+        
+        if 'OK' in serial_buffer:
+            match = re.search(r'\+CSQ: (\d+),', serial_buffer)
+            if match:
+                signal_strength = int(match.group(1))
+                return signal_strength
+        
 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
-start_time = time.time()
-print(start_time)
 
 signal_strength = sim800.signal_strength()
 print(f'Signal Strength: {signal_strength}')
