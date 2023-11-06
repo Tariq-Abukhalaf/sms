@@ -60,6 +60,7 @@ class SIM800L:
         if 'OK' in serial_buffer:
             serial_buffer.replace('AT+CCID', '')
             serial_buffer.replace('OK', '')
+            print(serial_buffer,end='\n')
             match = re.search(r'(\w+)', serial_buffer)
             if match:
                 iccid = int(match.group(0))
