@@ -170,7 +170,7 @@ class SIM800L:
         if 'OK' in serial_buffer:
             match = re.search(r'\+COPS: (\d+),(\d+),"(.+)"', serial_buffer)
             if match:
-                network = match.group(1)
+                network = match.group(2)
                 return network
             return -1
         return -1
