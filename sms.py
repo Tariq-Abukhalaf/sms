@@ -53,6 +53,23 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(b'AT+CCID\r\n')
         serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            serial_buffer = serial_buffer.replace('AT+CCID', '')
+            serial_buffer = serial_buffer.replace('OK', '')
+            match = re.search(r'(\w+)', serial_buffer)
+            if match:
+                iccid = match.group(0)
+                return iccid.strip()
+            return -1
+        return -1
+    
+    def device_information(self):
+        """
+            AT commands to get device information
+        """
+        self.clear_serial()
+        self.serial.write(b'ATI\r\n')
+        serial_buffer = self.read_serial()
         print('***',end='\n')
         print(serial_buffer,end='\n')
         print('***',end='\n')
@@ -75,5 +92,8 @@ print(f'Signal Strength: {signal_strength}')
 
 iccid = sim800.iccid()
 print(f'iccid: {iccid}')
+
+device_information = sim800.device_information()
+print(f'device_information: {device_information}')
 
 sim800.close()
