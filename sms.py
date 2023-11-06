@@ -186,43 +186,27 @@ class SIM800L:
         return -1
 
 
-start_time = time.time() 
-
 sim800 = SIM800L('/dev/serial0', 115000) 
 
 signal_strength = sim800.signal_strength()
 print(f'Signal Strength: {signal_strength}')
-
 iccid = sim800.iccid()
 print(f'ICCID: {iccid}')
-
 device_information = sim800.device_information()
 print(f'Device Information: {device_information}')
-
 modem_name = sim800.modem_name()
 print(f'Modem Name: {modem_name}')
-
 sim_status = sim800.sim_status()
 print(f'Sim Status: {sim_status}')
-
 sim_response = sim800.sim_response()
 print(f'Sim Response: {sim_response}')
-
 imsi = sim800.imsi()
 print(f'IMSI: {imsi}')
-
 mcc,mnc = sim800.mcc_mnc_digit()
 print(f'MCC: {mcc}')
 print(f'MNC: {mnc}')
-
 service_provider = sim800.service_provider()
 print(f'Service Provider: {service_provider}')
-
 network = sim800.network()
 print(f'Network : {network}')
-
 sim800.close()
-
-end_time = time.time()
-elapsed_time = end_time - start_time
-print(f"took {elapsed_time:.6f} seconds to execute.")
