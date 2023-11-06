@@ -30,15 +30,16 @@ class SIM800L:
 
     def signal_strength(self):
         self.clear_serial()
-        self.serial.write(b'AT+CSQ\r\n')
+        self.serial.write(b'AT+CSQ\r')
         serial_buffer = self.read_serial()
         print(serial_buffer)
-        
         if 'OK' in serial_buffer:
             match = re.search(r'\+CSQ: (\d+),', serial_buffer)
             if match:
                 signal_strength = int(match.group(1))
                 return signal_strength
+            return -1
+        return -1
         
 
 
