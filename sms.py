@@ -15,6 +15,7 @@ class SIM800L:
 
     def read_serial(self):
         while not self.serial.in_waiting:
+            print('h1')
             time.sleep(0.01)
         if self.serial.in_waiting:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
@@ -79,14 +80,8 @@ class SIM800L:
         if 'OK' in serial_buffer:
             serial_buffer = serial_buffer.replace('ATI', '')
             serial_buffer = serial_buffer.replace('OK', '')
-            # serial_buffer.strip()
             device_information = serial_buffer
             return device_information.strip()
-            # match = re.search(r'(\w+)', serial_buffer)
-            # if match:
-            #     iccid = match.group(0)
-            #     return iccid.strip()
-            # return -1
         return -1
         
 
