@@ -78,6 +78,15 @@ class SIM800L:
             return device_information.strip()
         return -1
     
+    def modem_name(self):
+        """
+            ex: SIM800
+        """
+        device_information = self.device_information()
+        parts = device_information.split(' ')
+        return parts[0]
+
+    
     def sim_status(self):
         """
             AT command for SIM presence and status
@@ -153,6 +162,9 @@ print(f'ICCID: {iccid}')
 device_information = sim800.device_information()
 print(f'Device Information: {device_information}')
 
+modem_name = sim800.modem_name()
+print(f'Modem Name: {modem_name}')
+
 sim_status = sim800.sim_status()
 print(f'Sim Status: {sim_status}')
 
@@ -162,7 +174,7 @@ print(f'Sim Response: {sim_response}')
 imsi = sim800.imsi()
 print(f'IMSI: {imsi}')
 
-mcc,mnc = sim800.mcc_mnc_digit(3)
+mcc,mnc = sim800.mcc_mnc_digit()
 print(f'MCC: {mcc}')
 print(f'MNC: {mnc}')
 
