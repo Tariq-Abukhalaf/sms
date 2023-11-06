@@ -75,7 +75,7 @@ class SIM800L:
             serial_buffer      = serial_buffer.replace('ATI', '')
             serial_buffer      = serial_buffer.replace('OK', '')
             device_information = serial_buffer
-            return device_information.strip()
+            return device_information.strip().upper()
         return -1
     
     def modem_name(self):
@@ -84,7 +84,7 @@ class SIM800L:
         """
         modem_name = self.device_information()
         parts = modem_name.split(' ')
-        return parts[0]
+        return parts[0].upper()
 
     
     def sim_status(self):
@@ -100,7 +100,7 @@ class SIM800L:
             serial_buffer   = serial_buffer.replace('OK', '')
             serial_buffer   = serial_buffer.replace('+CPIN: ', '')
             sim_status      = serial_buffer
-            return sim_status.strip()
+            return sim_status.strip().upper()
         return -1
     
     def sim_response(self):
@@ -114,7 +114,7 @@ class SIM800L:
         if 'OK' in serial_buffer:
             serial_buffer = serial_buffer.replace('AT', '')
             sim_response  = serial_buffer
-            return sim_response.strip()
+            return sim_response.strip().upper()
         return -1
     
     def imsi(self):
@@ -155,7 +155,7 @@ class SIM800L:
             match = re.search(r'\+CSPN: "([^"]+)"', serial_buffer)
             if match:
                 service_provider = match.group(1)
-                return service_provider
+                return service_provider.upper()
             return -1
         return -1
     
@@ -171,7 +171,7 @@ class SIM800L:
             match = re.search(r'\+COPS: (\d+),(\d+),"(.+)"', serial_buffer)
             if match:
                 network = match.group(3)
-                return network
+                return network.upper()
             return -1
         return -1
 
