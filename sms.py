@@ -1,6 +1,14 @@
 import serial
 import re
 import time
+from time_spend import tic
+
+@tic
+def example_function():
+    time.sleep(2)
+
+example_function()
+
 
 class SIM800L:
     def __init__(self, serial_port, baud_rate):
@@ -174,9 +182,7 @@ class SIM800L:
                 return network.upper()
             return -1
         return -1
-
-
-        
+       
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
