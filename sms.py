@@ -44,7 +44,7 @@ class SIM800L:
             match = re.search(r'\+CSQ: (\d+),', serial_buffer)
             if match:
                 signal_strength = int(match.group(1))
-                return round(signal_strength/31,2)
+                return round((signal_strength/31)*100,2)
             return -1
         return -1
     
@@ -104,8 +104,8 @@ class SIM800L:
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
             serial_buffer      = serial_buffer.replace('AT', '')
-            sim_status         = serial_buffer
-            return sim_status.strip()
+            sim_response         = serial_buffer
+            return sim_response.strip()
         return -1
         
 
