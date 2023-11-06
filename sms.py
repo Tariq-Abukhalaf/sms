@@ -208,4 +208,7 @@ print(f'MNC: {mnc}')
 service_provider = sim800.service_provider()
 print(f'Service Provider: {service_provider}')
 
+network = sim800.network()
+print(f'Network : {network}')
+
 sim800.close()
