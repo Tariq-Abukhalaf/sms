@@ -14,7 +14,17 @@ class SIM800L:
         self.serial.close()
 
     def read_serial(self):
-        while not self.serial.in_waiting :
+        print('hi')
+        while not self.serial.in_waiting:
+            time.sleep(0.01)
+        if self.serial.in_waiting:
+            return self.serial.read(self.serial.in_waiting).decode('utf-8')
+        return ""
+    
+    def read_serial(self,timeout):
+        print('bye')
+        start_time = time.time()
+        while not self.serial.in_waiting and time.time() - start_time < timeout:
             time.sleep(0.01)
         if self.serial.in_waiting:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
@@ -29,11 +39,8 @@ class SIM800L:
         # time.sleep(1)
         # print(self.serial.in_waiting)
         # serial_buffer = self.serial.read(self.serial.in_waiting).decode('utf-8')
-
+        
         match = re.search(r'\+CSQ: (\d+),', serial_buffer)
-        print(match.group(0))
-        print(match.group(1))
-        print(match.group(2))
         if match:
             signal_strength = int(match.group(1))
             return signal_strength
