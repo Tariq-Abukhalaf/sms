@@ -3,13 +3,6 @@ import re
 import time
 from time_spend import tic
 
-@tic
-def example_function():
-    time.sleep(2)
-
-example_function()
-
-
 class SIM800L:
     def __init__(self, serial_port, baud_rate):
         self.serial = serial.Serial(serial_port, baud_rate, timeout=1)
@@ -37,6 +30,7 @@ class SIM800L:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
 
+    @tic
     def signal_strength(self):
         """
             AT command returns the signal strength of the device.
