@@ -17,7 +17,7 @@ class SIM800L:
         # while self.serial.in_waiting > 0:
         #     print("Inside while")
 
-        print(self.serial.in_waiting);
+        print(self.serial.in_waiting)
             
 
         time.sleep(1)  
