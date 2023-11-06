@@ -150,7 +150,7 @@ class SIM800L:
         """
         self.clear_serial()
         self.serial.write(b'AT+CSPN?\r\n')
-        time.sleep(2)
+        # time.sleep(2)
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
             # serial_buffer  = serial_buffer.replace('AT+CIMI', '')
