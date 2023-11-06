@@ -103,9 +103,7 @@ class SIM800L:
         self.serial.write(b'AT\r\n')
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
-            serial_buffer      = serial_buffer.replace('AT+CPIN?', '')
-            serial_buffer      = serial_buffer.replace('OK', '')
-            serial_buffer      = serial_buffer.replace('+CPIN: ', '')
+            serial_buffer      = serial_buffer.replace('AT', '')
             sim_status         = serial_buffer
             return sim_status.strip()
         return -1
