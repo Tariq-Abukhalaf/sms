@@ -107,4 +107,7 @@ print(f'ICCID: {iccid}')
 device_information = sim800.device_information()
 print(f'Device Information: {device_information}')
 
+sim_status = sim800.sim_status()
+print(f'Sim Status: {sim_status}')
+
 sim800.close()
