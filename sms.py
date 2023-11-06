@@ -17,6 +17,7 @@ class SIM800L:
         while not self.serial.in_waiting:
             print('h1')
             time.sleep(0.01)
+        print(self.serial.in_waiting)
         if self.serial.in_waiting:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
