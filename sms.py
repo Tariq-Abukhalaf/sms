@@ -82,8 +82,8 @@ class SIM800L:
         """
             ex: SIM800
         """
-        device_information = self.device_information()
-        parts = device_information.split(' ')
+        modem_name = self.device_information()
+        parts = modem_name.split(' ')
         return parts[0]
 
     
@@ -150,13 +150,12 @@ class SIM800L:
         """
         self.clear_serial()
         self.serial.write(b'AT+CSPN?\r\n')
-        # time.sleep(2)
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
             # serial_buffer  = serial_buffer.replace('AT+CIMI', '')
             # serial_buffer  = serial_buffer.replace('OK', '')
-            imsi           = serial_buffer
-            return imsi.strip()
+            service_provider = serial_buffer
+            return service_provider.strip()
         return -1
 
 
