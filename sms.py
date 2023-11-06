@@ -44,4 +44,4 @@ sim800 = SIM800L('/dev/serial0', 115000)
 signal_strength = sim800.signal_strength()
 print(f'Signal Strength: {signal_strength}')
 
-sim800.close()
+# sim800.close()
