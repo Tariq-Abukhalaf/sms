@@ -123,7 +123,7 @@ class SIM800L:
             return imsi.strip()
         return -1
     
-    def mcc_mnc_2digit(self):
+    def mcc_mnc_digit(self,mcn_digit=2):
         """
             The first 3 digits of the IMSI represent the MCC (Mobile Country Code).
             The next 2 or 3 digits represent the MNC (Mobile Network Code).
@@ -131,7 +131,7 @@ class SIM800L:
         """
         mcc_mnc_2digit = self.imsi()
         mcc = mcc_mnc_2digit[0:3]
-        mnc = mcc_mnc_2digit[3:5]
+        mnc = mcc_mnc_2digit[3:3+mcn_digit]
         return mcc, mnc
 
         
@@ -162,8 +162,8 @@ print(f'Sim Response: {sim_response}')
 imsi = sim800.imsi()
 print(f'IMSI: {imsi}')
 
-print(sim800.mcc_mnc_2digit())
-# print(f'MCC: {mcc}')
-# print(f'MNC: {mnc}')
+mcc,mnc = sim800.mcc_mnc_digit()
+print(f'MCC: {mcc}')
+print(f'MNC: {mnc}')
 
 sim800.close()
