@@ -74,6 +74,20 @@ class SIM800L:
             device_information = serial_buffer
             return device_information.strip()
         return -1
+    
+    def sim_status(self):
+        """
+            AT commands for SIM presence and status
+        """
+        self.clear_serial()
+        self.serial.write(b'AT+CPIN?\r\n')
+        serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            # serial_buffer      = serial_buffer.replace('ATI', '')
+            # serial_buffer      = serial_buffer.replace('OK', '')
+            device_information = serial_buffer
+            return device_information.strip()
+        return -1
         
 
 
