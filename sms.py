@@ -65,7 +65,7 @@ class SIM800L:
     
     def device_information(self):
         """
-            AT commands to get device information
+            AT command to get device information
             ex: SIM800 R14.18
         """
         self.clear_serial()
@@ -80,46 +80,47 @@ class SIM800L:
     
     def sim_status(self):
         """
-            AT commands for SIM presence and status
+            AT command for SIM presence and status
             ex: READY
         """
         self.clear_serial()
         self.serial.write(b'AT+CPIN?\r\n')
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
-            serial_buffer      = serial_buffer.replace('AT+CPIN?', '')
-            serial_buffer      = serial_buffer.replace('OK', '')
-            serial_buffer      = serial_buffer.replace('+CPIN: ', '')
-            sim_status         = serial_buffer
+            serial_buffer   = serial_buffer.replace('AT+CPIN?', '')
+            serial_buffer   = serial_buffer.replace('OK', '')
+            serial_buffer   = serial_buffer.replace('+CPIN: ', '')
+            sim_status      = serial_buffer
             return sim_status.strip()
         return -1
     
     def sim_response(self):
         """
-            AT commands for check communication between the module and the computer.
+            AT command for check communication between the module and the computer.
             ex: OK
         """
         self.clear_serial()
         self.serial.write(b'AT\r\n')
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
-            serial_buffer      = serial_buffer.replace('AT', '')
-            sim_response         = serial_buffer
+            serial_buffer = serial_buffer.replace('AT', '')
+            sim_response  = serial_buffer
             return sim_response.strip()
         return -1
     
     def mcc_mnc(self):
         """
-            This AT command returns IMSI (International Mobile Subscriber Identity) of the mobile terminal.
+            AT command returns IMSI (International Mobile Subscriber Identity) of the mobile terminal.
             ex:
         """
         self.clear_serial()
         self.serial.write(b'AT+CIMI\r\n')
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
-            # serial_buffer      = serial_buffer.replace('AT', '')
-            sim_response         = serial_buffer
-            return sim_response.strip()
+            serial_buffer  = serial_buffer.replace('AT+CIMI', '')
+            serial_buffer  = serial_buffer.replace('OK', '')
+            mcc_mnc        = serial_buffer
+            return mcc_mnc.strip()
         return -1
         
 
