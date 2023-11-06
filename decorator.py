@@ -1,4 +1,7 @@
 import time
+import logging
+
+logging.basicConfig(filename='timing.log', level=logging.INFO)
 
 def time_it(func):
     def wrapper(*args, **kwargs):
@@ -7,5 +10,8 @@ def time_it(func):
         end_time = time.time()
         elapsed_time = end_time - start_time
         print(f"{func.__name__} took {elapsed_time:.6f} seconds to execute.")
+        logging.info(f"{func.__name__} took {elapsed_time:.6f} seconds to execute.")
         return result
     return wrapper
+
+
