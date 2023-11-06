@@ -142,14 +142,24 @@ class SIM800L:
         mcc = mcc_mnc_2digit[0:3]
         mnc = mcc_mnc_2digit[3:3+mcn_digit]
         return mcc, mnc
+    
+    def service_provider(self):
+        """
+            AT command is used to get the service provider name from the SIM.
+            ex: Orange JO 
+        """
+        self.clear_serial()
+        self.serial.write(b'AT+CSPN?\r\n')
+        serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            # serial_buffer  = serial_buffer.replace('AT+CIMI', '')
+            # serial_buffer  = serial_buffer.replace('OK', '')
+            imsi           = serial_buffer
+            return imsi.strip()
+        return -1
+
 
         
-
-
-
-# print('***',end='\n')
-# print(serial_buffer,end='\n')
-# print('***',end='\n')
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
@@ -177,5 +187,8 @@ print(f'IMSI: {imsi}')
 mcc,mnc = sim800.mcc_mnc_digit()
 print(f'MCC: {mcc}')
 print(f'MNC: {mnc}')
+
+service_provider = sim800.service_provider()
+print(f'Service Provider: {service_provider}')
 
 sim800.close()
