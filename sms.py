@@ -14,8 +14,10 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(b'AT+CSQ\r\n')
         
-        while self.serial.in_waiting > 0:
-            print("Inside while")
+        # while self.serial.in_waiting > 0:
+        #     print("Inside while")
+
+        print(self.serial.in_waiting);
             
 
         time.sleep(1)  
