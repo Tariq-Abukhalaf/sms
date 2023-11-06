@@ -79,7 +79,7 @@ class SIM800L:
         if 'OK' in serial_buffer:
             serial_buffer = serial_buffer.replace('ATI', '')
             serial_buffer = serial_buffer.replace('OK', '')
-            serial_buffer.strip()
+            # serial_buffer.strip()
             device_information = serial_buffer
             return device_information.strip()
             # match = re.search(r'(\w+)', serial_buffer)
