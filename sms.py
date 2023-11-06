@@ -158,6 +158,22 @@ class SIM800L:
                 return service_provider
             return -1
         return -1
+    
+    def network(self):
+        """
+            AT command is used to Check the current network
+            ex: MOBILECOM
+        """
+        self.clear_serial()
+        self.serial.write(b'AT+COPS?\r\n')
+        serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            match = re.search(r'\+COPS: (\d+),(\d+),"(.+)"', serial_buffer)
+            if match:
+                network = match.group(1)
+                return network
+            return -1
+        return -1
 
 
         
