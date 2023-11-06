@@ -129,9 +129,9 @@ class SIM800L:
             The next 2 or 3 digits represent the MNC (Mobile Network Code).
             ex: 416 77 
         """
-        mcc_mnc_2digit = imsi()
+        mcc_mnc_2digit = self.imsi()
         mcc = mcc_mnc_2digit[0:3]
-        mnc = imsi[3:5]
+        mnc = mcc_mnc_2digit[3:5]
         return mcc, mnc
 
         
