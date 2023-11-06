@@ -30,7 +30,6 @@ class SIM800L:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
 
-    @tic
     def signal_strength(self):
         """
             AT command returns the signal strength of the device.
@@ -145,6 +144,7 @@ class SIM800L:
         mnc = mcc_mnc_2digit[3:3+mcn_digit]
         return mcc, mnc
     
+    @tic
     def service_provider(self):
         """
             AT command is used to get the service provider name from the SIM.
