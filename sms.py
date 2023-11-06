@@ -20,7 +20,8 @@ class SIM800L:
         print(self.serial.in_waiting)
             
 
-        time.sleep(1)  
+        time.sleep(1)
+        print(self.serial.in_waiting)
         serial_buffer = self.serial.read(self.serial.in_waiting).decode('utf-8')
 
         match = re.search(r'\+CSQ: (\d+),', serial_buffer)
