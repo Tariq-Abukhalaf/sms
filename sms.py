@@ -88,9 +88,9 @@ signal_strength = sim800.signal_strength()
 print(f'Signal Strength: {signal_strength}')
 
 iccid = sim800.iccid()
-print(f'iccid: {iccid}')
+print(f'ICCID: {iccid}')
 
 device_information = sim800.device_information()
-print(f'device_information: {device_information}')
+print(f'Device Information: {device_information}')
 
 sim800.close()
