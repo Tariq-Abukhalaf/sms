@@ -42,7 +42,7 @@ class SIM800L:
             match = re.search(r'\+CSQ: (\d+),', serial_buffer)
             if match:
                 signal_strength = int(match.group(1))
-                return float(signal_strength)/float(31)
+                return signal_strength/31
             return -1
         return -1
         
