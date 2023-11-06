@@ -152,6 +152,7 @@ class SIM800L:
         self.serial.write(b'AT+CSPN?\r\n')
         serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
+            print(serial_buffer)
             match = re.search(r'\+CSPN: (\w+),', serial_buffer)
             if match:
                 signal_strength = match.group(0)
