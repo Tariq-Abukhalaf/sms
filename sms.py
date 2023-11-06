@@ -38,7 +38,7 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(b'AT+CSQ\r\n')
         serial_buffer = self.read_serial()
-        print(serial_buffer)
+        print(serial_buffer,end='\n')
         if 'OK' in serial_buffer:
             match = re.search(r'\+CSQ: (\d+),', serial_buffer)
             if match:
@@ -54,7 +54,9 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(b'AT+CCID\r\n')
         serial_buffer = self.read_serial()
-        print(serial_buffer)
+        print('***',end='\n')
+        print(serial_buffer,end='\n')
+        print('***',end='\n')
         if 'OK' in serial_buffer:
             match = re.search(r'(\w+)', serial_buffer)
             if match:
