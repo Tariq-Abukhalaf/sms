@@ -27,7 +27,7 @@ class SIM800L:
             return signal_strength
 
 
-sim800 = SIM800L('/dev/serial0', 115000, 5) 
+sim800 = SIM800L('/dev/serial0', 115000) 
 
 signal_strength = sim800.signal_strength()
 print(f'Signal Strength: {signal_strength}')
