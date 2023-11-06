@@ -108,10 +108,10 @@ class SIM800L:
             return sim_response.strip()
         return -1
     
-    def mcc_mnc(self):
+    def imsi(self):
         """
             AT command returns IMSI (International Mobile Subscriber Identity) of the mobile terminal.
-            ex:
+            ex: 416770126242644
         """
         self.clear_serial()
         self.serial.write(b'AT+CIMI\r\n')
@@ -119,9 +119,21 @@ class SIM800L:
         if 'OK' in serial_buffer:
             serial_buffer  = serial_buffer.replace('AT+CIMI', '')
             serial_buffer  = serial_buffer.replace('OK', '')
-            mcc_mnc        = serial_buffer
-            return mcc_mnc.strip()
+            imsi           = serial_buffer
+            return imsi.strip()
         return -1
+    
+    def mcc_mnc_2digit(self):
+        """
+            The first 3 digits of the IMSI represent the MCC (Mobile Country Code).
+            The next 2 or 3 digits represent the MNC (Mobile Network Code).
+            ex: 416 77 
+        """
+        mcc_mnc_2digit = imsi()
+        mcc = mcc_mnc_2digit[0:3]
+        mnc = imsi[3:5]
+        return mcc, mnc
+
         
 
 
@@ -147,7 +159,11 @@ print(f'Sim Status: {sim_status}')
 sim_response = sim800.sim_response()
 print(f'Sim Response: {sim_response}')
 
-mcc_mnc = sim800.mcc_mnc()
-print(f'mcc_mnc: {mcc_mnc}')
+imsi = sim800.imsi()
+print(f'IMSI: {imsi}')
+
+print(sim800.mcc_mnc_2digit())
+# print(f'MCC: {mcc}')
+# print(f'MNC: {mnc}')
 
 sim800.close()
