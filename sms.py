@@ -58,7 +58,7 @@ class SIM800L:
             serial_buffer = serial_buffer.replace('OK', '')
             serial_buffer.strip()
             iccid = serial_buffer
-            return iccid
+            return iccid.strip()
             # match = re.search(r'(\w+)', serial_buffer)
             # if match:
             #     iccid = match.group(0)
@@ -81,7 +81,7 @@ class SIM800L:
             serial_buffer = serial_buffer.replace('OK', '')
             serial_buffer.strip()
             device_information = serial_buffer
-            return device_information
+            return device_information.strip()
             # match = re.search(r'(\w+)', serial_buffer)
             # if match:
             #     iccid = match.group(0)
