@@ -29,6 +29,11 @@ class SIM800L:
         return ""
 
     def signal_strength(self):
+        """
+            AT command returns the signal strength of the device.
+            <min>: 2
+            <max>: 31  
+        """
         self.clear_serial()
         self.serial.write(b'AT+CSQ\r\n')
         serial_buffer = self.read_serial()
@@ -37,7 +42,7 @@ class SIM800L:
             match = re.search(r'\+CSQ: (\d+),', serial_buffer)
             if match:
                 signal_strength = int(match.group(1))
-                return signal_strength
+                return float(signal_strength)/float(31)
             return -1
         return -1
         
