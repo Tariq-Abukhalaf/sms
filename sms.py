@@ -21,7 +21,7 @@ class SIM800L:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
     
-    def read_serial(self,timeout):
+    def read_serial_timeout(self,timeout):
         print('bye')
         start_time = time.time()
         while not self.serial.in_waiting and time.time() - start_time < timeout:
@@ -39,7 +39,7 @@ class SIM800L:
         # time.sleep(1)
         # print(self.serial.in_waiting)
         # serial_buffer = self.serial.read(self.serial.in_waiting).decode('utf-8')
-        
+
         match = re.search(r'\+CSQ: (\d+),', serial_buffer)
         if match:
             signal_strength = int(match.group(1))
