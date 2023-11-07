@@ -32,7 +32,7 @@ class SIM800L:
     #     return ""
     
     def read_serial_until_unchanged(self):
-        prev_waiting_byte = -1
+        prev_waiting_byte = 1
         while (self.serial.in_waiting != prev_waiting_byte):
             print(self.serial.in_waiting)
             time.sleep(0.02)
