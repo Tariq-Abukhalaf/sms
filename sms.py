@@ -200,6 +200,11 @@ class SIM800L:
             return True
         return False
     
+    def hex_to_human_readable(hex_message):
+        segments        = [hex_message[i:i+4] for i in range(0, len(hex_message), 4)]
+        decoded_message = ''.join([chr(int(segment, 16)) for segment in segments])
+        return decoded_message
+
     @time_it
     def read_sms(self,id):
         """
@@ -221,61 +226,11 @@ class SIM800L:
                 filtered_list  = [item.replace('\r', '') for item in parts]
                 filtered_list  = [item for item in filtered_list if item.strip()]
                 info           = filtered_list[0].split(',')
-                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),filtered_list[1].strip()
+                msg            = filtered_list[1].strip()
+                msg = self.hex_to_human_readable(msg)
+                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg
             return -1
         return -1
-
-    
-    # def read_all_sms(self):
-    #         """
-    #             AT command is used to read all sms sent by others to this chip
-    #             ex: 
-    #         """
-    #         self.clear_serial()
-    #         self.serial.write(b'AT+CMGF=1\r\n')
-    #         serial_buffer = self.read_serial()
-    #         if 'OK' in serial_buffer:
-    #             self.clear_serial()
-    #             self.serial.write(b'AT+CMGL="ALL"\r\n')
-    #             serial_buffer = self.read_serial()
-    #             print(serial_buffer)
-
-
-    #         # self.serial.write(b'AT+CMGL=\"ALL\"')
-    #         # print(serial_buffer)
-
-    # def list(self, onlyUnread=False):
-    #     if onlyUnread:
-    #         self.serial.write(b'AT+CMGL="REC UNREAD",1\r')
-    #     else:
-    #         self.serial.write(b'AT+CMGL="ALL",1\r')
-
-    #     time.sleep(30)
-
-    #     return_data = ""
-
-    #     if "ERROR" in self._buffer:
-    #         return_data = "ERROR"
-    #     else:
-    #         if "+CMGL:" in self._buffer:
-    #             data = self._buffer
-    #             quit_loop = False
-    #             return_data = ""
-    #             while not quit_loop:
-    #                 if "+CMGL:" not in data:
-    #                     quit_loop = True
-    #                     continue
-    #                 data = data[data.index("+CMGL: ") + 7:]
-    #                 metin = data[:data.index(",")].strip()
-
-    #                 if return_data == "":
-    #                     return_data += "SMSIndexNo:" + metin
-    #                 else:
-    #                     return_data += "," + metin
-    #         else:
-    #             return_data = "NO_SMS"
-
-    #     return return_data
 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
