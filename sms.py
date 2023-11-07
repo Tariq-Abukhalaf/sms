@@ -213,7 +213,7 @@ class SIM800L:
                 serial_buffer  = serial_buffer.replace('AT+CMGR={}'.format(id), '')
                 serial_buffer  = serial_buffer.replace('+CMGR: ', '')
                 serial_buffer  = serial_buffer.replace('OK', '')
-                parts = serial_buffer.split('\n')
+                parts = serial_buffer.split('\r')
                 print(parts)
         return -1
 
