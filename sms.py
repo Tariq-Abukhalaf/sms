@@ -24,17 +24,37 @@ class SIM800L:
     #         return self.serial.read(self.serial.in_waiting).decode('utf-8')
     #     return ""
     
+    # def read_serial(self):
+    #     previous_data = b""
+    #     while True:
+    #         if self.serial.in_waiting:
+    #             current_data = self.serial.read(self.serial.in_waiting)
+    #             if current_data != previous_data:
+    #                 previous_data = current_data
+    #                 return current_data.decode('utf-8')
+
+    #         # print('No change in data, sleeping for 0.04 seconds')
+    #         time.sleep(0.04)
+
+
     def read_serial(self):
-        previous_data = b""  # Initialize with an empty bytes object
+        previous_data = b""  
+        unchanged_count = 0
         while True:
             if self.serial.in_waiting:
                 current_data = self.serial.read(self.serial.in_waiting)
                 if current_data != previous_data:
                     previous_data = current_data
+                    unchanged_count = 0 
+                else:
+                    unchanged_count += 1
+
+                if unchanged_count >= 3:
                     return current_data.decode('utf-8')
 
             print('No change in data, sleeping for 0.04 seconds')
             time.sleep(0.04)
+
     
     # def read_serial_timeout(self,timeout):
     #     start_time = time.time()
