@@ -269,8 +269,8 @@ class SIM800L:
                 if self.is_hexadecimal(msg):   
                     msg = self.hex_to_human_readable(msg)
                 return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg
-            return -1,-1,-1,-1,-1,-1
-        return -1,-1,-1,-1,-1,-1
+            return -1,-1,-1,-1,-1
+        return -1,-1,-1,-1,-1
     
     @time_it
     def list_sms_indices(self):
