@@ -38,7 +38,7 @@ class SIM800L:
         while (self.serial.in_waiting != prev_waiting_byte):
             if (time.time() - start_time) > timeout:
                 return -99
-            time.sleep(0.0001)
+            time.sleep(0.01)
             prev_waiting_byte = self.serial.in_waiting 
 
         if self.serial.in_waiting:
