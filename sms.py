@@ -205,11 +205,10 @@ class SIM800L:
         """
             AT command is used to get msg by index id
             ex: 
-                16
+                26
                 REC READ
                 +962795514170
-                23/11/06
-                14:24:10+12
+                23/11/07 14:00:58+12
                 A steady diet of dog food may cause blindness in your cat - it lacks taurine.
         """
         if (sim800.set_text_mode(1)):
@@ -218,27 +217,15 @@ class SIM800L:
             serial_buffer = self.read_serial()
             if 'OK' in serial_buffer:
                 serial_buffer  = serial_buffer.replace('AT+CMGR={}'.format(id), '').replace('"','').replace('+CMGR: ', '').replace('OK', '')
-                parts = serial_buffer.split('\n')
-                filtered_list = [item.replace('\r', '') for item in parts]
-                filtered_list = [item for item in filtered_list if item.strip()]
-                info     = filtered_list[0].split(',')
+                parts          = serial_buffer.split('\n')
+                filtered_list  = [item.replace('\r', '') for item in parts]
+                filtered_list  = [item for item in filtered_list if item.strip()]
+                info           = filtered_list[0].split(',')
                 return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),filtered_list[1].strip()
             return -1
         return -1
 
-        # result = self.command('AT+CMGR={}\n'.format(id),99)
-        # if result:
-        #     params=result.split(',')
-        #     if not params[0] == '':
-        #         params2 = params[0].split(':')
-        #         if params2[0]=='+CMGR':
-        #             number = params[1].replace('"',' ').strip()
-        #             date   = params[3].replace('"',' ').strip()
-        #             time   = params[4].replace('"',' ').strip()
-        #             return  [number,date,time,self.savbuf]
-        # return None    
-
-
+    
     # def read_all_sms(self):
     #         """
     #             AT command is used to read all sms sent by others to this chip
