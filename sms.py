@@ -5,7 +5,7 @@ from decorator import time_it
 
 class SIM800L:
     def __init__(self, serial_port, baud_rate):
-        self.serial = serial.Serial(serial_port, baud_rate, timeout=1)
+        self.serial = serial.Serial(serial_port, baud_rate, timeout=0.3)
 
     def set_timeout(self,timeout=0.1):
         self.serial.timeout = timeout
