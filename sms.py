@@ -306,6 +306,7 @@ status,phone,date,msg = sim800.read_sms(16)
 print(status,end='\n')
 print(phone,end='\n')
 print(date,end='\n')
+print(time,end='\n')
 print(msg,end='\n')
 
 sim800.close()
