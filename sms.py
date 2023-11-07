@@ -185,6 +185,20 @@ class SIM800L:
                 return network.upper()
             return -1
         return -1
+    
+    def set_text_mode(self, mode):
+        """
+            AT command sets the GSM modem in SMS Text Mode or SMS PDU Mode.
+            0 = PDU Mode, 
+            1 = Text Mode
+        """
+        self.clear_serial()
+        self.serial.write(f'AT+CMGF={mode}\r\n'.encode())
+        serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            return True
+        return False
+    
 
 
     def read_sms(self,id):
@@ -307,6 +321,8 @@ service_provider = sim800.service_provider()
 print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
+
+sim800.set_text_mode(1)
 
 sim800.read_sms(16)
 # print(status,end='\n')
