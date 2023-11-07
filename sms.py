@@ -268,10 +268,11 @@ class SIM800L:
                 msg            = filtered_list[1].strip()
                 if self.is_hexadecimal(msg):   
                     msg = self.hex_to_human_readable(msg)
-                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg,len(msg)
+                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg
             return -1
         return -1
     
+    @time_it
     def list_sms_indices(self):
         if (sim800.set_text_mode(1)):
             self.clear_serial()
@@ -280,7 +281,8 @@ class SIM800L:
             serial_buffer = self.read_serial()
             self.set_timeout(0.1)
             indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
-            return indices
+            int_list = [int(index) for index in indices]
+            return int_list
         return -1
 
 
@@ -308,13 +310,12 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 print('**************************************',end='\n')
-index,status,phone,dt_message,message,length = sim800.read_sms(31)
+index,status,phone,dt_message,message= sim800.read_sms(31)
 print('Message Index:',index,end='\n')
 print('Status:',status,end='\n')
 print('Phone Number Sender:',phone,end='\n')
 print('Timestamp:',dt_message,end='\n')
 print('Message:',message,end='\n')
-print('Length:',length,end='\n')
 print('**************************************',end='\n')
 test = sim800.list_sms_indices()
 print(test)
