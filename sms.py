@@ -217,21 +217,14 @@ class SIM800L:
                 parts = serial_buffer.split('\n')
                 filtered_list = [item.replace('\r', '') for item in parts]
                 filtered_list = [item for item in filtered_list if item.strip()]
-                index  = id
-                msg    = filtered_list[1].strip()
-                info   = filtered_list[0].split(',')
-                status = info[0].strip()
-                phone  = info[1].strip()
-                date   = info[3].strip()
-                time   = info[4].strip()
-
-                print(index,end='\n')
-                print(msg,end='\n')
-                print(status,end='\n')
-                print(phone,end='\n')
-                print(date,end='\n')
-                print(time,end='\n')
-
+                index    = id
+                message  = filtered_list[1].strip()
+                info     = filtered_list[0].split(',')
+                status   = info[0].strip()
+                phone    = info[1].strip()
+                date_message   = info[3].strip()
+                time_message   = info[4].strip()
+                return index,status,phone,date_message,time_message,message
         return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
@@ -324,11 +317,13 @@ network = sim800.network()
 print(f'Network : {network}')
 
 
-sim800.read_sms(16)
-# print(status,end='\n')
-# print(phone,end='\n')
-# print(date,end='\n')
-# print(msg,end='\n')
+index,status,phone,date_message,time_message,message = sim800.read_sms(16)
+print(index,end='\n')
+print(status,end='\n')
+print(phone,end='\n')
+print(date_message,end='\n')
+print(time_message,end='\n')
+print(message,end='\n')
 
 sim800.close()
 
