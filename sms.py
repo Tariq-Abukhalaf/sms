@@ -200,7 +200,7 @@ class SIM800L:
             return True
         return False
     
-    def hex_to_human_readable(hex_message):
+    def hex_to_human_readable(self,hex_message):
         segments        = [hex_message[i:i+4] for i in range(0, len(hex_message), 4)]
         decoded_message = ''.join([chr(int(segment, 16)) for segment in segments])
         return decoded_message
@@ -227,6 +227,7 @@ class SIM800L:
                 filtered_list  = [item for item in filtered_list if item.strip()]
                 info           = filtered_list[0].split(',')
                 msg            = filtered_list[1].strip()
+                msg            = self.hex_to_human_readable(msg)
                 return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg
             return -1
         return -1
