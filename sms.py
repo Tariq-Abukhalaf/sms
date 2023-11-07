@@ -192,9 +192,16 @@ class SIM800L:
             """
             self.clear_serial()
             self.serial.write(b'AT+CMGF=1\r\n')
-            # self.serial.write(b'AT+CMGL=\"ALL\"')
             serial_buffer = self.read_serial()
-            print(serial_buffer)
+            if 'OK' in serial_buffer:
+                self.clear_serial()
+                self.serial.write(b'AT+CMGL="ALL"')
+                serial_buffer = self.read_serial()
+                print(serial_buffer)
+
+
+            # self.serial.write(b'AT+CMGL=\"ALL\"')
+            # print(serial_buffer)
 
 
 
