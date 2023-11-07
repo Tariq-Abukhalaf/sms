@@ -201,6 +201,15 @@ class SIM800L:
             serial_buffer  = serial_buffer.replace('OK', '')
             serial_buffer  = serial_buffer.strip()
             parts          = serial_buffer.split(',')
+
+            status = parts[0]
+            phone  = parts[1]
+
+            date  = parts[3]
+            time  = parts[4]
+
+            msg = parts[5]
+            return status,phone,date,time,msg
             print(parts)
         return -1
 
