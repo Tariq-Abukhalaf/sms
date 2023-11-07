@@ -184,6 +184,17 @@ class SIM800L:
                 return network.upper()
             return -1
         return -1
+    
+    def read_all_sms(self):
+            """
+                AT command is used to read all sms sent by others to this chip
+                ex: 
+            """
+            self.clear_serial()
+            self.serial.write(b'AT+CMGL="ALL"\r\n')
+            serial_buffer = self.read_serial()
+            print(serial_buffer)
+
 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
@@ -209,4 +220,7 @@ service_provider = sim800.service_provider()
 print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
+
+test = sim800.read_all_sms()
+print(test)
 sim800.close()
