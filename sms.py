@@ -30,6 +30,7 @@ class SIM800L:
             if self.serial.in_waiting:
                 current_data = self.serial.read(self.serial.in_waiting)
                 if current_data != previous_data:
+                    print('.')
                     previous_data = current_data
                     return current_data.decode('utf-8')
 
