@@ -205,6 +205,7 @@ class SIM800L:
         decoded_message = ''.join([chr(int(segment, 16)) for segment in segments])
         return decoded_message
 
+    @time_it
     def read_sms(self,id):
         """
             AT command is used to get msg by index id
@@ -226,9 +227,7 @@ class SIM800L:
                 filtered_list  = [item for item in filtered_list if item.strip()]
                 info           = filtered_list[0].split(',')
                 msg            = filtered_list[1].strip()
-                msg = self.hex_to_human_readable(msg)
-                print(msg)
-                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),filtered_list[1].strip()
+                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg
             return -1
         return -1
 
