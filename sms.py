@@ -246,10 +246,12 @@ class SIM800L:
         if (sim800.set_text_mode(1)):
             self.clear_serial()
             self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
-            time.sleep(10)
+            print(self.serial.in_waiting)
+            time.sleep(5)
             # serial_buffer = self.read_serial()
             print(self.serial.in_waiting)
-
+            time.sleep(5)
+            print(self.serial.in_waiting)
             serial_buffer = self.serial.read(self.serial.in_waiting).decode('utf-8')
             print(serial_buffer)
 
