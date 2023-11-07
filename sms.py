@@ -200,6 +200,12 @@ class SIM800L:
             return True
         return False
     
+    @time_it
+    def is_hexadecimal(self,text):
+        hex_pattern = r'^[0-9A-Fa-f]+$'
+        return bool(re.match(hex_pattern, text))
+    
+    @time_it
     def hex_to_human_readable(self,hex_message):
         segments        = [hex_message[i:i+4] for i in range(0, len(hex_message), 4)]
         decoded_message = ''.join([chr(int(segment, 16)) for segment in segments])
@@ -227,7 +233,8 @@ class SIM800L:
                 filtered_list  = [item for item in filtered_list if item.strip()]
                 info           = filtered_list[0].split(',')
                 msg            = filtered_list[1].strip()
-                msg            = self.hex_to_human_readable(msg)
+                if self.is_hexadecimal(msg):   
+                    msg = self.hex_to_human_readable(msg)
                 return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg,len(msg)
             return -1
         return -1
