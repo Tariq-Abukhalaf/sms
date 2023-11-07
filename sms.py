@@ -196,13 +196,18 @@ class SIM800L:
         self.serial.write(f'AT+CMGR={id}\r\n'.encode())
         serial_buffer = self.read_serial()
         print(serial_buffer)
-        # if 'OK' in serial_buffer:
-        #     match = re.search(r'\+COPS: (\d+),(\d+),"(.+)"', serial_buffer)
-        #     if match:
-        #         network = match.group(3)
-        #         return network.upper()
-        #     return -1
-        # return -1
+        if 'OK' in serial_buffer:
+            match = re.search(r'\+CMGR: "([^"]+)","([^"]+)","([^"]+)"', serial_buffer)
+            if match:
+                status = match.group(1)
+                phone_number = match.group(2)
+                timestamp = match.group(3)
+                print(status)
+                print(phone_number)
+                print(timestamp)
+
+            return -1
+        return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
         # if result:
