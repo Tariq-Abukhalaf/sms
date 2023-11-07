@@ -32,11 +32,10 @@ class SIM800L:
     #     return ""
     
     def read_serial_timeout(self, timeout):
-
         start_time = time.time()
         prev_waiting_byte = 0 
         
-        while (self.serial.in_waiting == prev_waiting_byte):
+        while (self.serial.in_waiting == prev_waiting_byte and time.time() - start_time < timeout):
             print(time.time() - start_time,end='\n')
             print(self.serial.in_waiting,end='\n')
             time.sleep(0.01)
