@@ -17,6 +17,7 @@ class SIM800L:
 
     def read_serial(self):
         while not self.serial.in_waiting:
+            print('hi')
             time.sleep(0.04)
 
         if self.serial.in_waiting:
@@ -261,7 +262,7 @@ class SIM800L:
         if (sim800.set_text_mode(1)):
             self.clear_serial()
             self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
-            serial_buffer = self.read_serial_until_unchanged()
+            serial_buffer = self.read_serial()
             indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
             return indices
         return -1
