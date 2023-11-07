@@ -17,47 +17,9 @@ class SIM800L:
     def close(self):
         self.serial.close()
 
-    # def read_serial(self):
-    #     while not self.serial.in_waiting:
-    #         print('hi')
-    #         time.sleep(0.04)
-
-    #     if self.serial.in_waiting:
-    #         return self.serial.read(self.serial.in_waiting).decode('utf-8')
-    #     return ""
-    
-    # def read_serial(self):
-    #     while True:
-    #         if self.serial.in_waiting:
-    #             current_data = self.serial.read(self.serial.in_waiting)
-    #             print(current_data)
-    #             return current_data.decode('utf-8')
-    #         time.sleep(0.04)
-
-
     def read_serial(self, prompt=b'OK\r\n>'):
         return self.serial.read_until(prompt).decode('utf-8')
-    
-    # def read_serial_timeout(self,timeout):
-    #     start_time = time.time()
-    #     while not self.serial.in_waiting and time.time() - start_time < timeout:
-    #         time.sleep(0.04)
-    #     if self.serial.in_waiting:
-    #         return self.serial.read(self.serial.in_waiting).decode('utf-8')
-    #     return ""
-    
-    def read_serial_until_unchanged(self):
-        prev_waiting_byte = 1
-        while (self.serial.in_waiting != prev_waiting_byte):
-            print(self.serial.in_waiting)
-            time.sleep(0.02)
-            prev_waiting_byte = self.serial.in_waiting 
-
-        if self.serial.in_waiting:
-            return self.serial.read(self.serial.in_waiting).decode('utf-8')
-        return ""
-
-
+        
     @time_it
     def signal_strength(self):
         """
