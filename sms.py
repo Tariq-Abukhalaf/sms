@@ -202,11 +202,13 @@ class SIM800L:
     
     @time_it
     def is_hexadecimal(self,text):
+        # return True if arabic
         hex_pattern = r'^[0-9A-Fa-f]+$'
         return bool(re.match(hex_pattern, text))
     
     @time_it
     def hex_to_human_readable(self,hex_message):
+        # only arabic 
         segments        = [hex_message[i:i+4] for i in range(0, len(hex_message), 4)]
         decoded_message = ''.join([chr(int(segment, 16)) for segment in segments])
         return decoded_message
@@ -238,6 +240,18 @@ class SIM800L:
                 return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg,len(msg)
             return -1
         return -1
+    
+    def list_sms_indices(self):
+        if (sim800.set_text_mode(1)):
+            self.clear_serial()
+            self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
+            time.sleep(60)
+            serial_buffer = self.read_serial()
+            if 'OK' in serial_buffer:
+                sms_indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
+                return sms_indices
+            return -1
+        return -1
 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
@@ -264,7 +278,6 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 print('**************************************',end='\n')
-
 index,status,phone,dt_message,message,length = sim800.read_sms(31)
 print('Message Index:',index,end='\n')
 print('Status:',status,end='\n')
@@ -272,6 +285,9 @@ print('Phone Number Sender:',phone,end='\n')
 print('Timestamp:',dt_message,end='\n')
 print('Message:',message,end='\n')
 print('Length:',length,end='\n')
+print('**************************************',end='\n')
+test = sim800.list_sms_indices()
+print(test)
 
 sim800.close()
 
