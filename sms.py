@@ -35,7 +35,7 @@ class SIM800L:
         start_time = time.time()
         prev_waiting_byte = 0 
         
-        while (self.serial.in_waiting == prev_waiting_byte or time.time() - start_time < timeout):
+        while (self.serial.in_waiting == prev_waiting_byte and time.time() - start_time < timeout):
             time.sleep(0.04)
             print('.')
             prev_waiting_byte = self.serial.in_waiting 
