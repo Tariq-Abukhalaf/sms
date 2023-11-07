@@ -192,11 +192,8 @@ class SIM800L:
             AT command is used to get msg by index id
             ex: 
         """
-        tt = f'AT+CMGR={id},0\r'.encode()
-        print(tt)
-        return 
         self.clear_serial()
-        self.serial.write(b'AT+CMGR={id}')
+        self.serial.write(f'AT+CMGR={id}\r\n'.encode())
         serial_buffer = self.read_serial()
         print(serial_buffer)
         # if 'OK' in serial_buffer:
