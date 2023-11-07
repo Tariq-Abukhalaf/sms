@@ -210,7 +210,7 @@ class SIM800L:
         else:
             self.serial.write(b'AT+CMGL="ALL",1\r')
 
-        self.serial.read_serial_timeout(30000)
+        self.read_serial_timeout(30000)
 
         return_data = ""
 
