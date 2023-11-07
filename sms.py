@@ -45,7 +45,6 @@ class SIM800L:
                 current_data = self.serial.read(self.serial.in_waiting)
                 if current_data != previous_data:
                     previous_data = current_data
-                    unchanged_count = 0 
                 else:
                     unchanged_count += 1
 
