@@ -197,27 +197,7 @@ class SIM800L:
         serial_buffer = self.read_serial()
         print(serial_buffer)
         if 'OK' in serial_buffer:
-
-            params =serial_buffer.split(',')
-            if not params[0] == '':
-                params2 = params[0].split(':')
-                if params2[0]=='+CMGR':
-                    number = params[1].replace('"',' ').strip()
-                    date   = params[3].replace('"',' ').strip()
-                    time   = params[4].replace('"',' ').strip()
-                    print(number,date,time)
-                    return  number,date,time
-                
-            # match = re.search(r'\+CMGR: "([^"]+)","([^"]+)","([^"]+)","([^"]+)"', serial_buffer)
-            # if match:
-            #     status = match.group(1)
-            #     phone_number = match.group(2)
-            #     timestamp = match.group(3)
-            #     print(status)
-            #     print(phone_number)
-            #     print(timestamp)
-
-            # return -1
+            print('hi')
         return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
