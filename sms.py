@@ -166,7 +166,7 @@ class SIM800L:
         """
         mcc_mnc_2digit = self.imsi()
         if mcc_mnc_2digit == -1:
-            return -1
+            return -1,-1
         mcc = mcc_mnc_2digit[0:3]
         mnc = mcc_mnc_2digit[3:3+mcn_digit]
         return mcc, mnc
