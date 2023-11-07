@@ -308,11 +308,11 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-status,phone,date,msg = sim800.read_sms(16)
-print(status,end='\n')
-print(phone,end='\n')
-print(date,end='\n')
-print(msg,end='\n')
+sim800.read_sms(16)
+# print(status,end='\n')
+# print(phone,end='\n')
+# print(date,end='\n')
+# print(msg,end='\n')
 
 sim800.close()
 
