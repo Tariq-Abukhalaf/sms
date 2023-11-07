@@ -35,6 +35,7 @@ class SIM800L:
 
     def read_serial(self, prompt=b'OK\r\n>'):
         data = self.serial.read_until(prompt)
+        print(data)
         return data.decode('utf-8')
     
     # def read_serial_timeout(self,timeout):
