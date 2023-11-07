@@ -324,7 +324,6 @@ print(phone,end='\n')
 print(date_message,end='\n')
 print(time_message,end='\n')
 print(message,end='\n')
-print('*********************',end='\n')
 
 print('*********************',end='\n')
 index,status,phone,date_message,time_message,message = sim800.read_sms(17)
