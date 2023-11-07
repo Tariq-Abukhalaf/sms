@@ -198,18 +198,18 @@ class SIM800L:
         print(serial_buffer)
         if 'OK' in serial_buffer:
             serial_buffer  = serial_buffer.replace('AT+CMGR={}'.format(id), '')
+            serial_buffer  = serial_buffer.replace('+CMGR: ', '')
             serial_buffer  = serial_buffer.replace('OK', '')
             serial_buffer  = serial_buffer.strip()
             parts          = serial_buffer.split(',')
 
-            status = parts[0]
-            phone  = parts[1]
+            status = parts[0].replace('"',' ').strip()
+            phone  = parts[1].replace('"',' ').strip()
 
-            date  = parts[3]
-            time  = parts[4]
+            date  = parts[3].replace('"',' ').strip()
+            msg  = parts[4].replace('"',' ').strip()
 
-            msg = parts[4]
-            return status,phone,date,time,msg
+            return status,phone,date,msg
             print(parts)
         return -1
 
@@ -302,11 +302,10 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-status,phone,date,time,msg = sim800.read_sms(16)
+status,phone,date,msg = sim800.read_sms(16)
 print(status,end='\n')
 print(phone,end='\n')
 print(date,end='\n')
-print(time,end='\n')
 print(msg,end='\n')
 
 sim800.close()
