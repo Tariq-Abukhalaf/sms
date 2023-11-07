@@ -218,7 +218,7 @@ class SIM800L:
     
     def read_all_sms(self):
         self.clear_serial()
-        self.send_command('AT+CMGL="ALL"')
+        self.serial.write('AT+CMGL="ALL"')
         # Wait for the response containing all SMS messages
         response = self.wait_for_response(b'OK')
         if response is not None:
@@ -264,5 +264,5 @@ if sms_messages is not None:
         print(f'SMS Text {index}: {sms_text}')
 else:
     print('Error: Unable to read SMS messages.')
-    
+
 sim800.close()
