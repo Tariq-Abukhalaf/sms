@@ -186,6 +186,7 @@ class SIM800L:
             return -1
         return -1
     
+    @time_it
     def set_text_mode(self, mode):
         """
             AT command sets the GSM modem in SMS Text Mode or SMS PDU Mode.
@@ -218,6 +219,20 @@ class SIM800L:
                 filtered_list = [item.replace('\r', '') for item in parts]
                 filtered_list = [item for item in filtered_list if item.strip()]
                 print(filtered_list)
+                index = id
+                msg = filtered_list[1]
+                info = filtered_list[0].split(',')
+                status = info[0]
+                phone = info[1]
+                date = info[3]
+                time = info[4]
+
+                print(index,end='\n')
+                print(msg,end='\n')
+                print(status,end='\n')
+                print(phone,end='\n')
+                print(date,end='\n')
+                print(time,end='\n')
 
         return -1
 
