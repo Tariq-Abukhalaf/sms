@@ -185,6 +185,40 @@ class SIM800L:
                 return network.upper()
             return -1
         return -1
+
+
+    def read_sms(self,id):
+        """
+            AT command is used to get msg by index id
+            ex: 
+        """
+        self.clear_serial()
+        self.serial.write(b'AT+CMGR=16\r\n')
+        serial_buffer = self.read_serial()
+        print(serial_buffer)
+        # if 'OK' in serial_buffer:
+        #     match = re.search(r'\+COPS: (\d+),(\d+),"(.+)"', serial_buffer)
+        #     if match:
+        #         network = match.group(3)
+        #         return network.upper()
+        #     return -1
+        # return -1
+
+        # result = self.command('AT+CMGR={}\n'.format(id),99)
+        # if result:
+        #     params=result.split(',')
+        #     if not params[0] == '':
+        #         params2 = params[0].split(':')
+        #         if params2[0]=='+CMGR':
+        #             number = params[1].replace('"',' ').strip()
+        #             date   = params[3].replace('"',' ').strip()
+        #             time   = params[4].replace('"',' ').strip()
+        #             return  [number,date,time,self.savbuf]
+        # return None    
+
+
+
+
     
     def read_all_sms(self):
             """
@@ -262,7 +296,7 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-test = sim800.list()
+test = sim800.read_sms()
 print(test)
 
 sim800.close()
