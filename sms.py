@@ -215,13 +215,9 @@ class SIM800L:
                 serial_buffer  = serial_buffer.replace('+CMGR: ', '')
                 serial_buffer  = serial_buffer.replace('OK', '')
                 parts = serial_buffer.split('\n')
-
-                
-                print(parts)
                 filtered_list = [item.replace('\r', '') for item in parts]
+                filtered_list = [item for item in filtered_list if item.strip()]
                 print(filtered_list)
-                filtered_list2 = [item for item in filtered_list if item.strip()]
-                print(filtered_list2)
 
         return -1
 
