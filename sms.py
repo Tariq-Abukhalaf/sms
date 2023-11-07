@@ -210,7 +210,8 @@ class SIM800L:
             serial_buffer = self.read_serial()
             print(serial_buffer)
             if 'OK' in serial_buffer:
-                print('hhhh')
+                parts = serial_buffer.split('\n')
+                print(parts)
         return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
