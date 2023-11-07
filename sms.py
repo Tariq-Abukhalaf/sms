@@ -24,15 +24,18 @@ class SIM800L:
     #         return self.serial.read(self.serial.in_waiting).decode('utf-8')
     #     return ""
     
-    def read_serial(self):
-        while True:
-            if self.serial.in_waiting:
-                current_data = self.serial.read(self.serial.in_waiting)
-                print(current_data)
-                return current_data.decode('utf-8')
-            time.sleep(0.04)
+    # def read_serial(self):
+    #     while True:
+    #         if self.serial.in_waiting:
+    #             current_data = self.serial.read(self.serial.in_waiting)
+    #             print(current_data)
+    #             return current_data.decode('utf-8')
+    #         time.sleep(0.04)
 
 
+    def read_serial(self, prompt=b'OK\r\n>'):
+        data = self.serial.read_until(prompt)
+        return data.decode('utf-8')
     
     # def read_serial_timeout(self,timeout):
     #     start_time = time.time()
