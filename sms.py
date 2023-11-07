@@ -25,7 +25,7 @@ class SIM800L:
     def read_serial_timeout(self,timeout):
         start_time = time.time()
         while not self.serial.in_waiting and time.time() - start_time < timeout:
-            time.sleep(0.01)
+            time.sleep(0.04)
         if self.serial.in_waiting:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
