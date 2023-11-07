@@ -197,7 +197,8 @@ class SIM800L:
         serial_buffer = self.read_serial()
         print(serial_buffer)
         if 'OK' in serial_buffer:
-            print('hi')
+            parts = serial_buffer.split(',')
+            print(parts)
         return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
@@ -289,8 +290,11 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-test = sim800.read_sms(16)
-print(test)
+status,phone,date,msg = sim800.read_sms(16)
+print(status,end='\n')
+print(phone,end='\n')
+print(date,end='\n')
+print(msg,end='\n')
 
 sim800.close()
 
