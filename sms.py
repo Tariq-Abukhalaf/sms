@@ -36,9 +36,7 @@ class SIM800L:
 
 
     def read_serial(self, prompt=b'OK\r\n>'):
-        data = self.serial.read_until(prompt)
-        print(data)
-        return data.decode('utf-8')
+        return self.serial.read_until(prompt).decode('utf-8')
     
     # def read_serial_timeout(self,timeout):
     #     start_time = time.time()
@@ -278,7 +276,9 @@ class SIM800L:
         if (sim800.set_text_mode(1)):
             self.clear_serial()
             self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
+            self.set_timeout(2)
             serial_buffer = self.read_serial()
+            self.set_timeout(0.1)
             indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
             return indices
         return -1
