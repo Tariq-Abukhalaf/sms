@@ -274,6 +274,11 @@ class SIM800L:
     
     @time_it
     def list_sms_indices(self):
+        """
+            AT command is used to list all indices sms messages
+            ex: 
+                [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+        """
         if (sim800.set_text_mode(1)):
             self.clear_serial()
             self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
@@ -317,8 +322,18 @@ print('Phone Number Sender:',phone,end='\n')
 print('Timestamp:',dt_message,end='\n')
 print('Message:',message,end='\n')
 print('**************************************',end='\n')
-test = sim800.list_sms_indices()
-print(test)
+list_sms_indices = sim800.list_sms_indices()
+print(list_sms_indices)
+print('**************************************',end='\n')
+
+for index in list_sms_indices:
+    index,status,phone,dt_message,message= sim800.read_sms(index)
+    print('Message Index:',index,end='\n')
+    print('Status:',status,end='\n')
+    print('Phone Number Sender:',phone,end='\n')
+    print('Timestamp:',dt_message,end='\n')
+    print('Message:',message,end='\n')
+    print('------------------',index,end='\n')
 
 sim800.close()
 
