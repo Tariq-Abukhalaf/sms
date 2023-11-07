@@ -197,7 +197,7 @@ class SIM800L:
         serial_buffer = self.read_serial()
         print(serial_buffer)
         if 'OK' in serial_buffer:
-            match = re.search(r'\+CMGR: "([^"]+)","([^"]+)","([^"]+)"', serial_buffer)
+            match = re.search(r'\+CMGR: "([^"]+)","([^"]+)","([^"]+)","([^"]+)"', serial_buffer)
             if match:
                 status = match.group(1)
                 phone_number = match.group(2)
