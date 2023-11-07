@@ -185,25 +185,46 @@ class SIM800L:
             return -1
         return -1
     
+    # def read_all_sms(self):
+    #         """
+    #             AT command is used to read all sms sent by others to this chip
+    #             ex: 
+    #         """
+    #         self.clear_serial()
+    #         self.serial.write(b'AT+CMGF=1\r\n')
+    #         serial_buffer = self.read_serial()
+    #         if 'OK' in serial_buffer:
+    #             self.clear_serial()
+    #             self.serial.write(b'AT+CMGL="ALL"\r\n')
+    #             time.sleep(10)
+    #             serial_buffer = self.read_serial()
+    #             print(serial_buffer)
+
+
+    #         # self.serial.write(b'AT+CMGL=\"ALL\"')
+    #         # print(serial_buffer)
+
+    def wait_for_response(self, expected_response, timeout=10):
+        response = b''
+        start_time = time.time()
+
+        while (time.time() - start_time) < timeout:
+            char = self.serial.read(1)
+            response += char
+            if char == b'\n':
+                break
+
+        return response.decode('utf-8')
+    
     def read_all_sms(self):
-            """
-                AT command is used to read all sms sent by others to this chip
-                ex: 
-            """
-            self.clear_serial()
-            self.serial.write(b'AT+CMGF=1\r\n')
-            serial_buffer = self.read_serial()
-            if 'OK' in serial_buffer:
-                self.clear_serial()
-                self.serial.write(b'AT+CMGL="ALL"\r\n')
-                time.sleep(10)
-                serial_buffer = self.read_serial()
-                print(serial_buffer)
-
-
-            # self.serial.write(b'AT+CMGL=\"ALL\"')
-            # print(serial_buffer)
-
+        self.clear_serial()
+        self.send_command('AT+CMGL="ALL"')
+        # Wait for the response containing all SMS messages
+        response = self.wait_for_response(b'OK')
+        if response is not None:
+            # Use regex to extract all SMS messages
+            sms_list = re.findall(r'\+CMGL: (\d+),(.+)', response, re.DOTALL)
+            return sms_list
 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
@@ -230,6 +251,18 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-test = sim800.read_all_sms()
-print(test)
+# test = sim800.read_all_sms()
+# print(test)
+
+sms_messages = sim800.read_all_sms()
+
+if sms_messages is not None:
+    for index, message in sms_messages:
+        sms_info = message[0]
+        sms_text = message[1].strip()
+        print(f'SMS Info {index}: {sms_info}')
+        print(f'SMS Text {index}: {sms_text}')
+else:
+    print('Error: Unable to read SMS messages.')
+    
 sim800.close()
