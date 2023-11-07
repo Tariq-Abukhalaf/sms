@@ -302,7 +302,7 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-status,phone,date,msg = sim800.read_sms(16)
+status,phone,date,time,msg = sim800.read_sms(16)
 print(status,end='\n')
 print(phone,end='\n')
 print(date,end='\n')
