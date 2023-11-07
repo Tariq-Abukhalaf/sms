@@ -196,7 +196,8 @@ class SIM800L:
             if 'OK' in serial_buffer:
                 self.clear_serial()
                 self.serial.write(b'AT+CMGL="ALL"\r\n')
-                serial_buffer = self.read_serial_timeout(60)
+                time.sleep(10)
+                serial_buffer = self.read_serial()
                 print(serial_buffer)
 
 
