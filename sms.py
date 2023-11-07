@@ -189,7 +189,7 @@ class SIM800L:
     def set_text_mode(self, mode):
         """
             AT command sets the GSM modem in SMS Text Mode or SMS PDU Mode.
-            0 = PDU Mode, 
+            0 = PDU Mode
             1 = Text Mode
         """
         self.clear_serial()
@@ -199,38 +199,18 @@ class SIM800L:
             return True
         return False
     
-
-
     def read_sms(self,id):
         """
             AT command is used to get msg by index id
             ex: 
         """
-        self.clear_serial()
-        self.serial.write(f'AT+CMGR={id}\r\n'.encode())
-        serial_buffer = self.read_serial()
-        print(serial_buffer)
-        if 'OK' in serial_buffer:
-            status_pattern = r'\+CMGR: "(\w+ \w+)",'
-            phone_pattern = r'"(\+\d+)",'
-            date_pattern = r'"(\d{2}/\d{2}/\d{2},\d{2}:\d{2}:\d{2}\+\d+)",'
-            message_pattern = r'(.*)\nOK'
-
-            status_match = re.search(status_pattern, serial_buffer)
-            phone_match = re.search(phone_pattern, serial_buffer)
-            date_match = re.search(date_pattern, serial_buffer)
-            message_match = re.search(message_pattern, serial_buffer, re.DOTALL)
-
-            if status_match and phone_match and date_match and message_match:
-                status = status_match.group(1)
-                phone_number = phone_match.group(1)
-                date = date_match.group(1)
-                message = message_match.group(1)
-                print(status)
-                print(phone_number)
-                print(date)
-                print(message)
-                return status,phone_number,date,message
+        if (sim800.set_text_mode(1)):
+            self.clear_serial()
+            self.serial.write(f'AT+CMGR={id}\r\n'.encode())
+            serial_buffer = self.read_serial()
+            print(serial_buffer)
+            if 'OK' in serial_buffer:
+                print('hhhh')
         return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
@@ -322,7 +302,6 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-print(sim800.set_text_mode(1))
 
 sim800.read_sms(16)
 # print(status,end='\n')
