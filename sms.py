@@ -333,7 +333,7 @@ for index in list_sms_indices:
     print('Phone Number Sender:',phone,end='\n')
     print('Timestamp:',dt_message,end='\n')
     print('Message:',message,end='\n')
-    print('------------------',index,end='\n')
+    print('------------------',end='\n')
 
 sim800.close()
 
