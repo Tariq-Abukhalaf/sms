@@ -205,7 +205,6 @@ class SIM800L:
         decoded_message = ''.join([chr(int(segment, 16)) for segment in segments])
         return decoded_message
 
-    @time_it
     def read_sms(self,id):
         """
             AT command is used to get msg by index id
