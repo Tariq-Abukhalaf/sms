@@ -228,7 +228,7 @@ class SIM800L:
                 info           = filtered_list[0].split(',')
                 msg            = filtered_list[1].strip()
                 msg            = self.hex_to_human_readable(msg)
-                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg
+                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),msg,len(msg)
             return -1
         return -1
 
@@ -258,12 +258,13 @@ network = sim800.network()
 print(f'Network : {network}')
 
 print('*********************',end='\n')
-index,status,phone,dt_message,message = sim800.read_sms(20)
+index,status,phone,dt_message,message,length = sim800.read_sms(20)
 print(index,end='\n')
 print(status,end='\n')
 print(phone,end='\n')
 print(dt_message,end='\n')
 print(message,end='\n')
+print(length,end='\n')
 
 sim800.close()
 
