@@ -217,7 +217,7 @@ class SIM800L:
                 parts = serial_buffer.split('\n')
                 filtered_list = [item.replace('\r', '') for item in parts]
                 filtered_list = [item for item in filtered_list if item.strip()]
-                index  = id.strip()
+                index  = id
                 msg    = filtered_list[1].strip()
                 info   = filtered_list[0].split(',')
                 status = info[0].strip()
