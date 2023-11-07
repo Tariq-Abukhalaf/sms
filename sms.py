@@ -245,8 +245,8 @@ class SIM800L:
         if (sim800.set_text_mode(1)):
             self.clear_serial()
             self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
-            time.sleep(10)
-            serial_buffer = self.read_serial()
+            # time.sleep(10)
+            serial_buffer = self.read_serial_timeout(10)
             indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
             return indices
         return -1
