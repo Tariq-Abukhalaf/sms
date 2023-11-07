@@ -200,31 +200,30 @@ class SIM800L:
             return True
         return False
     
+    @time_it
     def read_sms(self,id):
         """
             AT command is used to get msg by index id
             ex: 
+                16
+                REC READ
+                +962795514170
+                23/11/06
+                14:24:10+12
+                A steady diet of dog food may cause blindness in your cat - it lacks taurine.
         """
         if (sim800.set_text_mode(1)):
             self.clear_serial()
             self.serial.write(f'AT+CMGR={id}\r\n'.encode())
             serial_buffer = self.read_serial()
             if 'OK' in serial_buffer:
-                serial_buffer  = serial_buffer.replace('AT+CMGR={}'.format(id), '')
-                serial_buffer  = serial_buffer.replace('"','')
-                serial_buffer  = serial_buffer.replace('+CMGR: ', '')
-                serial_buffer  = serial_buffer.replace('OK', '')
+                serial_buffer  = serial_buffer.replace('AT+CMGR={}'.format(id), '').replace('"','').replace('+CMGR: ', '').replace('OK', '')
                 parts = serial_buffer.split('\n')
                 filtered_list = [item.replace('\r', '') for item in parts]
                 filtered_list = [item for item in filtered_list if item.strip()]
-                index    = id
-                message  = filtered_list[1].strip()
                 info     = filtered_list[0].split(',')
-                status   = info[0].strip()
-                phone    = info[1].strip()
-                date_message   = info[3].strip()
-                time_message   = info[4].strip()
-                return index,status,phone,date_message,time_message,message
+                return id,info[0].strip(),info[1].strip(),info[3].strip()+' '+info[4].strip(),filtered_list[1].strip()
+            return -1
         return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
@@ -317,23 +316,12 @@ network = sim800.network()
 print(f'Network : {network}')
 
 print('*********************',end='\n')
-index,status,phone,date_message,time_message,message = sim800.read_sms(16)
+index,status,phone,dt_message,message = sim800.read_sms(16)
 print(index,end='\n')
 print(status,end='\n')
 print(phone,end='\n')
-print(date_message,end='\n')
-print(time_message,end='\n')
+print(dt_message,end='\n')
 print(message,end='\n')
-
-print('*********************',end='\n')
-index,status,phone,date_message,time_message,message = sim800.read_sms(17)
-print(index,end='\n')
-print(status,end='\n')
-print(phone,end='\n')
-print(date_message,end='\n')
-print(time_message,end='\n')
-print(message,end='\n')
-print('*********************',end='\n')
 
 sim800.close()
 
