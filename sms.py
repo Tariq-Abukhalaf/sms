@@ -209,7 +209,6 @@ class SIM800L:
             self.clear_serial()
             self.serial.write(f'AT+CMGR={id}\r\n'.encode())
             serial_buffer = self.read_serial()
-            print(serial_buffer)
             if 'OK' in serial_buffer:
                 serial_buffer  = serial_buffer.replace('AT+CMGR={}'.format(id), '')
                 serial_buffer  = serial_buffer.replace('"','')
@@ -218,14 +217,13 @@ class SIM800L:
                 parts = serial_buffer.split('\n')
                 filtered_list = [item.replace('\r', '') for item in parts]
                 filtered_list = [item for item in filtered_list if item.strip()]
-                print(filtered_list)
-                index = id
-                msg = filtered_list[1]
-                info = filtered_list[0].split(',')
-                status = info[0]
-                phone = info[1]
-                date = info[3]
-                time = info[4]
+                index  = id.strip()
+                msg    = filtered_list[1].strip()
+                info   = filtered_list[0].split(',')
+                status = info[0].strip()
+                phone  = info[1].strip()
+                date   = info[3].strip()
+                time   = info[4].strip()
 
                 print(index,end='\n')
                 print(msg,end='\n')
