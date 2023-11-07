@@ -32,6 +32,7 @@ class SIM800L:
     #     return ""
     
     def read_serial_timeout(self, timeout):
+        self.clear_serial()
         start_time = time.time()
         prev_waiting_byte = 0 
         
