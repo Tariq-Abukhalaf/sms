@@ -192,8 +192,11 @@ class SIM800L:
             AT command is used to get msg by index id
             ex: 
         """
+        tt = f'AT+CMGR={id},0\r'.encode()
+        print(tt)
+        return 
         self.clear_serial()
-        self.serial.write(f'AT+CMGR={id}')
+        self.serial.write(b'AT+CMGR={id}')
         serial_buffer = self.read_serial()
         print(serial_buffer)
         # if 'OK' in serial_buffer:
@@ -217,59 +220,56 @@ class SIM800L:
         # return None    
 
 
+    # def read_all_sms(self):
+    #         """
+    #             AT command is used to read all sms sent by others to this chip
+    #             ex: 
+    #         """
+    #         self.clear_serial()
+    #         self.serial.write(b'AT+CMGF=1\r\n')
+    #         serial_buffer = self.read_serial()
+    #         if 'OK' in serial_buffer:
+    #             self.clear_serial()
+    #             self.serial.write(b'AT+CMGL="ALL"\r\n')
+    #             serial_buffer = self.read_serial()
+    #             print(serial_buffer)
 
 
-    
-    def read_all_sms(self):
-            """
-                AT command is used to read all sms sent by others to this chip
-                ex: 
-            """
-            self.clear_serial()
-            self.serial.write(b'AT+CMGF=1\r\n')
-            serial_buffer = self.read_serial()
-            if 'OK' in serial_buffer:
-                self.clear_serial()
-                self.serial.write(b'AT+CMGL="ALL"\r\n')
-                serial_buffer = self.read_serial()
-                print(serial_buffer)
+    #         # self.serial.write(b'AT+CMGL=\"ALL\"')
+    #         # print(serial_buffer)
 
+    # def list(self, onlyUnread=False):
+    #     if onlyUnread:
+    #         self.serial.write(b'AT+CMGL="REC UNREAD",1\r')
+    #     else:
+    #         self.serial.write(b'AT+CMGL="ALL",1\r')
 
-            # self.serial.write(b'AT+CMGL=\"ALL\"')
-            # print(serial_buffer)
+    #     time.sleep(30)
 
-    def list(self, onlyUnread=False):
-        if onlyUnread:
-            self.serial.write(b'AT+CMGL="REC UNREAD",1\r')
-        else:
-            self.serial.write(b'AT+CMGL="ALL",1\r')
+    #     return_data = ""
 
-        time.sleep(30)
+    #     if "ERROR" in self._buffer:
+    #         return_data = "ERROR"
+    #     else:
+    #         if "+CMGL:" in self._buffer:
+    #             data = self._buffer
+    #             quit_loop = False
+    #             return_data = ""
+    #             while not quit_loop:
+    #                 if "+CMGL:" not in data:
+    #                     quit_loop = True
+    #                     continue
+    #                 data = data[data.index("+CMGL: ") + 7:]
+    #                 metin = data[:data.index(",")].strip()
 
-        return_data = ""
+    #                 if return_data == "":
+    #                     return_data += "SMSIndexNo:" + metin
+    #                 else:
+    #                     return_data += "," + metin
+    #         else:
+    #             return_data = "NO_SMS"
 
-        if "ERROR" in self._buffer:
-            return_data = "ERROR"
-        else:
-            if "+CMGL:" in self._buffer:
-                data = self._buffer
-                quit_loop = False
-                return_data = ""
-                while not quit_loop:
-                    if "+CMGL:" not in data:
-                        quit_loop = True
-                        continue
-                    data = data[data.index("+CMGL: ") + 7:]
-                    metin = data[:data.index(",")].strip()
-
-                    if return_data == "":
-                        return_data += "SMSIndexNo:" + metin
-                    else:
-                        return_data += "," + metin
-            else:
-                return_data = "NO_SMS"
-
-        return return_data
+    #     return return_data
 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
