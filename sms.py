@@ -316,7 +316,7 @@ network = sim800.network()
 print(f'Network : {network}')
 
 print('*********************',end='\n')
-index,status,phone,dt_message,message = sim800.read_sms(16)
+index,status,phone,dt_message,message = sim800.read_sms(18)
 print(index,end='\n')
 print(status,end='\n')
 print(phone,end='\n')
