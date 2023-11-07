@@ -208,7 +208,7 @@ class SIM800L:
             date  = parts[3]
             time  = parts[4]
 
-            msg = parts[5]
+            msg = parts[4]
             return status,phone,date,time,msg
             print(parts)
         return -1
