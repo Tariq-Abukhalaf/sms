@@ -23,14 +23,27 @@ class SIM800L:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
     
-    def read_serial_timeout(self,timeout):
+    # def read_serial_timeout(self,timeout):
+    #     start_time = time.time()
+    #     while not self.serial.in_waiting and time.time() - start_time < timeout:
+    #         time.sleep(0.04)
+    #     if self.serial.in_waiting:
+    #         return self.serial.read(self.serial.in_waiting).decode('utf-8')
+    #     return ""
+    
+    def read_serial_timeout(self, timeout):
         start_time = time.time()
-        while not self.serial.in_waiting and time.time() - start_time < timeout:
+        prev_waiting_byte = 0 
+        
+        while (self.serial.in_waiting == prev_waiting_byte or time.time() - start_time < timeout):
             time.sleep(0.04)
             print('.')
+            prev_waiting_byte = self.serial.in_waiting 
+
         if self.serial.in_waiting:
             return self.serial.read(self.serial.in_waiting).decode('utf-8')
         return ""
+
 
     @time_it
     def signal_strength(self):
@@ -246,15 +259,9 @@ class SIM800L:
         if (sim800.set_text_mode(1)):
             self.clear_serial()
             self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
-            print(self.serial.in_waiting)
-            time.sleep(0.4)
-            # serial_buffer = self.read_serial()
-            print(self.serial.in_waiting)
-            time.sleep(3)
-            print(self.serial.in_waiting)
-            serial_buffer = self.serial.read(self.serial.in_waiting).decode('utf-8')
+            # time.sleep(3)
+            serial_buffer = self.read_serial_timeout(10)
             print(serial_buffer)
-
             indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
             return indices
         return -1
