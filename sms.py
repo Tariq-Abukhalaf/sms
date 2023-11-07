@@ -296,7 +296,7 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-test = sim800.read_sms()
+test = sim800.read_sms(16)
 print(test)
 
 sim800.close()
