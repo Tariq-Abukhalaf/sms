@@ -210,7 +210,7 @@ class SIM800L:
             serial_buffer = self.read_serial()
             print(serial_buffer)
             if 'OK' in serial_buffer:
-                parts = serial_buffer.split('\n')
+                parts = serial_buffer.split('\r')
                 print(parts)
         return -1
 
