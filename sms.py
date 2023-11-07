@@ -212,6 +212,10 @@ class SIM800L:
                 phone_number = phone_match.group(1)
                 date = date_match.group(1)
                 message = message_match.group(1)
+                print(status)
+                print(phone_number)
+                print(date)
+                print(message)
                 return status,phone_number,date,message
         return -1
 
