@@ -266,12 +266,12 @@ print(f'Network : {network}')
 print('**************************************',end='\n')
 
 index,status,phone,dt_message,message,length = sim800.read_sms(16)
-print('Message Index: ',index,end='\n')
-print('Status: ',status,end='\n')
-print('Phone Number Sender: ',phone,end='\n')
-print('Timestamp: ',dt_message,end='\n')
-print('Message: ',message,end='\n')
-print('Length: ',length,end='\n')
+print('Message Index:',index,end='\n')
+print('Status:',status,end='\n')
+print('Phone Number Sender:',phone,end='\n')
+print('Timestamp:',dt_message,end='\n')
+print('Message:',message,end='\n')
+print('Length:',length,end='\n')
 
 sim800.close()
 
