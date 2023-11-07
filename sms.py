@@ -247,6 +247,7 @@ class SIM800L:
             self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
             time.sleep(60)
             serial_buffer = self.read_serial()
+            print(serial_buffer)
             if 'OK' in serial_buffer:
                 sms_indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
                 return sms_indices
