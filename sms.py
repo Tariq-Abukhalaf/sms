@@ -197,20 +197,22 @@ class SIM800L:
         serial_buffer = self.read_serial()
         print(serial_buffer)
         if 'OK' in serial_buffer:
-            serial_buffer  = serial_buffer.replace('AT+CMGR={}'.format(id), '')
-            serial_buffer  = serial_buffer.replace('+CMGR: ', '')
-            serial_buffer  = serial_buffer.replace('OK', '')
-            serial_buffer  = serial_buffer.strip()
-            parts          = serial_buffer.split(',')
+            status_pattern = r'\+CMGR: "(\w+ \w+)",'
+            phone_pattern = r'"(\+\d+)",'
+            date_pattern = r'"(\d{2}/\d{2}/\d{2},\d{2}:\d{2}:\d{2}\+\d+)",'
+            message_pattern = r'(.*)\nOK'
 
-            status = parts[0].replace('"',' ').strip()
-            phone  = parts[1].replace('"',' ').strip()
+            status_match = re.search(status_pattern, serial_buffer)
+            phone_match = re.search(phone_pattern, serial_buffer)
+            date_match = re.search(date_pattern, serial_buffer)
+            message_match = re.search(message_pattern, serial_buffer, re.DOTALL)
 
-            date  = parts[3].replace('"',' ').strip()
-            msg  = parts[4].replace('"',' ').strip()
-
-            return status,phone,date,msg
-            print(parts)
+            if status_match and phone_match and date_match and message_match:
+                status = status_match.group(1)
+                phone_number = phone_match.group(1)
+                date = date_match.group(1)
+                message = message_match.group(1)
+                return status,phone_number,date,message
         return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
