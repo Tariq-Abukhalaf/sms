@@ -245,13 +245,11 @@ class SIM800L:
         if (sim800.set_text_mode(1)):
             self.clear_serial()
             self.serial.write(f'AT+CMGL="ALL"\r\n'.encode())
-            time.sleep(20)
+            time.sleep(10)
             serial_buffer = self.read_serial()
             print(serial_buffer)
-            if 'OK' in serial_buffer:
-                sms_indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
-                return sms_indices
-            return -1
+            sms_indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
+            return sms_indices
         return -1
 
 
