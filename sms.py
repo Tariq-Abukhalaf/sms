@@ -220,7 +220,9 @@ class SIM800L:
                 print(parts)
                 filtered_list = [item.replace('\r', '') for item in parts]
                 print(filtered_list)
-                
+                filtered_list2 = [item for item in filtered_list if item.strip()]
+                print(filtered_list2)
+
         return -1
 
         # result = self.command('AT+CMGR={}\n'.format(id),99)
