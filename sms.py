@@ -104,6 +104,8 @@ class SIM800L:
             ex: SIM800
         """
         modem_name = self.device_information()
+        if modem_name == -1 :
+            return -1
         parts = modem_name.split(' ')
         return parts[0].upper()
 
