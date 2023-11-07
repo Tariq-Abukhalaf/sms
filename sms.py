@@ -6,6 +6,7 @@ from decorator import time_it
 class SIM800L:
     def __init__(self, serial_port, baud_rate):
         self.serial = serial.Serial(serial_port, baud_rate, timeout=1)
+        self._buffer = ""
 
     def clear_serial(self):
         self.serial.flushInput()
@@ -203,6 +204,38 @@ class SIM800L:
             # self.serial.write(b'AT+CMGL=\"ALL\"')
             # print(serial_buffer)
 
+    def list(self, onlyUnread=False):
+        if onlyUnread:
+            self.serial.write(b'AT+CMGL="REC UNREAD",1\r')
+        else:
+            self.serial.write(b'AT+CMGL="ALL",1\r')
+
+        self.serial.read_serial_timeout(30000)
+
+        return_data = ""
+
+        if "ERROR" in self._buffer:
+            return_data = "ERROR"
+        else:
+            if "+CMGL:" in self._buffer:
+                data = self._buffer
+                quit_loop = False
+                return_data = ""
+                while not quit_loop:
+                    if "+CMGL:" not in data:
+                        quit_loop = True
+                        continue
+                    data = data[data.index("+CMGL: ") + 7:]
+                    metin = data[:data.index(",")].strip()
+
+                    if return_data == "":
+                        return_data += "SMSIndexNo:" + metin
+                    else:
+                        return_data += "," + metin
+            else:
+                return_data = "NO_SMS"
+
+        return return_data
 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
@@ -229,6 +262,10 @@ print(f'Service Provider: {service_provider}')
 network = sim800.network()
 print(f'Network : {network}')
 
-test = sim800.read_all_sms()
+test = sim800.list()
 print(test)
+
 sim800.close()
+
+
+
