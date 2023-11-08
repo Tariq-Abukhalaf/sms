@@ -22,7 +22,12 @@ class SIM800L:
         return self.serial.read_until(prompt).decode('utf-8')
     
     def rs(self):
-        return self.serial.read().decode('utf-8')
+        while not self.serial.in_waiting:
+            time.sleep(0.04)
+        if self.serial.in_waiting:
+            return self.serial.read(self.serial.in_waiting).decode('utf-8')
+        return ""
+
         
     @time_it
     def signal_strength(self):
@@ -265,9 +270,7 @@ class SIM800L:
         if (sim800.set_text_mode(0)):
             self.clear_serial()
             self.serial.write(f'AT+CUSD=1,"{ussd_code}",15'.encode())
-            time.sleep(4)
             serial_buffer = self.rs()
-            
             print(serial_buffer)
             if 'OK' in serial_buffer:
                 # serial_buffer  = serial_buffer.replace('+CUSD: 0, ','').replace('"','').replace('OK', '')
