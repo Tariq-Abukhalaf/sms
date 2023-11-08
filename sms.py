@@ -200,7 +200,7 @@ class SIM800L:
             This AT command selects the character set of the mobile equipment.
         """
         self.clear_serial()
-        self.serial.write(f'AT+CSCS={mode}\r\n'.encode())
+        self.serial.write(f'AT+CSCS="{mode}"\r\n'.encode())
         serial_buffer = self.read_serial()
         print(serial_buffer)
         if 'OK' in serial_buffer:
@@ -308,7 +308,7 @@ class SIM800L:
         response = self.read_serial(b'>')
         if '>' in response:
             self.clear_serial()
-            self.serial.write(message.encode('utf-16-be') + bytes([26]))
+            self.serial.write(message.encode() + bytes([26]))
             self.set_timeout(3)
             response = self.read_serial(b'OK\r\n')
             self.set_timeout(0.1)
