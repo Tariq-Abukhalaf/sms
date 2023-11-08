@@ -356,7 +356,6 @@ if api_data:
     print(api_data["fact"])
 
 balance = sim800.get_balance('*155#')
-print(balance)
 
 sim800.close()
 
