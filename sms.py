@@ -272,9 +272,11 @@ class SIM800L:
         """
         pass
 
-    def get_api_data(self,api_uri):
+    def get_api_data(self,uri):
+        # phone number: sent to 
+        # msg: 
         try:
-            response = requests.get(api_uri)
+            response = requests.get(uri)
             if response.status_code == 200:
                 data = response.json() 
                 return data
@@ -284,9 +286,6 @@ class SIM800L:
             return None
 
 sim800 = SIM800L('/dev/serial0', 115000) 
-
-
-start_time = time.time()
 
 signal_strength = sim800.signal_strength()
 print(f'Signal Strength: {signal_strength}')
@@ -321,14 +320,15 @@ list_sms_indices = sim800.list_sms_indices()
 print(list_sms_indices)
 print('**************************************',end='\n')
 
-for index in list_sms_indices:
-    index,status,phone,dt_message,message= sim800.read_sms(index)
-    print('Message Index:',index,end='\n')
-    print('Status:',status,end='\n')
-    print('Phone Number Sender:',phone,end='\n')
-    print('Timestamp:',dt_message,end='\n')
-    print('Message:',message,end='\n')
-    print('------------------',end='\n')
+if list_sms_indices:
+    for index in list_sms_indices:
+        index,status,phone,dt_message,message= sim800.read_sms(index)
+        print('Message Index:',index,end='\n')
+        print('Status:',status,end='\n')
+        print('Phone Number Sender:',phone,end='\n')
+        print('Timestamp:',dt_message,end='\n')
+        print('Message:',message,end='\n')
+        print('------------------',end='\n')
 
 sim800.delete_sms(44)
 
@@ -338,10 +338,6 @@ if api_data:
 
 sim800.close()
 
-
-end_time = time.time()
-elapsed_time = end_time - start_time
-print(f"took {elapsed_time:.6f} seconds to execute.")
 
 
 
