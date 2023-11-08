@@ -269,12 +269,7 @@ class SIM800L:
         """
             AT command is used to delete all msgs
         """
-        self.clear_serial()
-        self.serial.write(f'AT+CMGD={id}\r\n'.encode())
-        serial_buffer = self.read_serial()
-        if 'OK' in serial_buffer:
-           return True
-        return False
+        pass
         
 
 
