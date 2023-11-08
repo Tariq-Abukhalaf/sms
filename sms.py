@@ -375,7 +375,7 @@ api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
     print(api_data["fact"])
 print('**************************************',end='\n')
-print(sim800.send_sms('0789221769','مرحبًا، هذه رسالة باللغة العربية.'))
+print(sim800.send_sms('0789221769','IBRAHIM'))
 print('**************************************',end='\n')
 sim800.close()
 
