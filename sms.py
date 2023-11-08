@@ -284,6 +284,23 @@ class SIM800L:
                 return None
         except requests.exceptions.RequestException as e:
             return None
+        
+    def send_sms(self, phone_number, message):
+        """
+            AT command is used to send sms msg
+        """
+        self.clear_serial()
+        self.serial.write(f'AT+CMGS="{phone_number}"'.encode())
+        response = self.read_serial(b'>')
+        if '>' in response:
+            self.clear_serial()
+            self.serial.write(message.encode() + bytes([26]))
+            response = self.read_serial(b'\r\n')
+            if "OK" in response:
+                return True
+            return False
+        return False
+        
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
@@ -331,10 +348,12 @@ if len(list_sms_indices) != 0:
         print('------------------',end='\n')
 
 sim800.delete_sms(44)
-
+print('**************************************',end='\n')
 api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
     print(api_data["fact"])
+print('**************************************',end='\n')
+print(sim800.send_sms('0789221769','hi from tareq'))
 print('**************************************',end='\n')
 sim800.close()
 
