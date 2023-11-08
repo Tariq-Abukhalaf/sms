@@ -195,6 +195,18 @@ class SIM800L:
         return False
     
     @time_it
+    def set_charset(self, mode):
+        """
+            This AT command selects the character set of the mobile equipment.
+        """
+        self.clear_serial()
+        self.serial.write(f'AT+CSCS={mode}\r\n'.encode())
+        serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            return True
+        return False
+    
+    @time_it
     def is_hexadecimal(self,text):
         # return True if arabic
         hex_pattern = r'^[0-9A-Fa-f]+$'
@@ -289,12 +301,13 @@ class SIM800L:
         """
             AT command is used to send sms msg
         """
+        self.send_auto_detect_language_sms(message)
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
         response = self.read_serial(b'>')
         if '>' in response:
             self.clear_serial()
-            self.serial.write(message.encode('utf-16-le') + bytes([26]))
+            self.serial.write(message.encode() + bytes([26]))
             self.set_timeout(3)
             response = self.read_serial(b'OK\r\n')
             self.set_timeout(0.1)
@@ -302,6 +315,12 @@ class SIM800L:
                 return True
             return False
         return False
+    
+    def send_auto_detect_language_sms(self, message):
+        is_arabic = bool(re.search('[\u0600-\u06FF]', message))
+        text_mode = 'UCS2' if is_arabic else 'GSM'
+        sim800.set_text_mode(1)
+        sim800.set_charset(text_mode)
         
 
 sim800 = SIM800L('/dev/serial0', 115000) 
@@ -355,7 +374,7 @@ api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
     print(api_data["fact"])
 print('**************************************',end='\n')
-print(sim800.send_sms('0789221769','السلام هههههه'))
+print(sim800.send_sms('0789221769','مرحبًا، هذه رسالة باللغة العربية.'))
 print('**************************************',end='\n')
 sim800.close()
 
