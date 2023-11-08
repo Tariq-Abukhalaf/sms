@@ -20,6 +20,9 @@ class SIM800L:
 
     def read_serial(self, prompt=b'OK\r\n>'):
         return self.serial.read_until(prompt).decode('utf-8')
+    
+    def rs(self):
+        return self.serial.read().decode('utf-8')
         
     @time_it
     def signal_strength(self):
@@ -256,14 +259,14 @@ class SIM800L:
     @time_it
     def get_balance(self,ussd_code):
         """
-            AT command is used to get lefted balance
+            AT command is used to get balance
         """
         if (sim800.set_text_mode(0)):
             self.clear_serial()
             self.serial.write(f'AT+CUSD=1,"{ussd_code}",15\r\n'.encode())
-            self.set_timeout(2)
-            serial_buffer = self.read_serial()
-            self.set_timeout(0.1)
+            # self.set_timeout(2)
+            serial_buffer = self.rs()
+            # self.set_timeout(0.1)
             print(serial_buffer)
             if 'OK' in serial_buffer:
                 # serial_buffer  = serial_buffer.replace('+CUSD: 0, ','').replace('"','').replace('OK', '')
