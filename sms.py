@@ -260,7 +260,7 @@ class SIM800L:
         """
         if (sim800.set_text_mode(0)):
             self.clear_serial()
-            self.serial.write(f'AT+CUSD=1,"{ussd_code}"'.encode())
+            self.serial.write(f'AT+CUSD=1,"{ussd_code}"\r\n'.encode())
             self.set_timeout(2)
             serial_buffer = self.read_serial()
             self.set_timeout(0.1)
