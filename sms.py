@@ -285,6 +285,9 @@ class SIM800L:
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
+
+start_time = time.time()
+
 signal_strength = sim800.signal_strength()
 print(f'Signal Strength: {signal_strength}')
 iccid = sim800.iccid()
@@ -334,6 +337,11 @@ if api_data:
     print(api_data["fact"])
 
 sim800.close()
+
+
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"took {elapsed_time:.6f} seconds to execute.")
 
 
 
