@@ -202,6 +202,7 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(f'AT+CSCS={mode}\r\n'.encode())
         serial_buffer = self.read_serial()
+        print(serial_buffer)
         if 'OK' in serial_buffer:
             return True
         return False
@@ -307,7 +308,7 @@ class SIM800L:
         response = self.read_serial(b'>')
         if '>' in response:
             self.clear_serial()
-            self.serial.write(message.encode() + bytes([26]))
+            self.serial.write(message.encode('utf-16-be') + bytes([26]))
             self.set_timeout(3)
             response = self.read_serial(b'OK\r\n')
             self.set_timeout(0.1)
@@ -319,6 +320,7 @@ class SIM800L:
     def send_auto_detect_language_sms(self, message):
         is_arabic = bool(re.search('[\u0600-\u06FF]', message))
         text_mode = 'UCS2' if is_arabic else 'GSM'
+        print(text_mode)
         sim800.set_text_mode(1)
         sim800.set_charset(text_mode)
         
