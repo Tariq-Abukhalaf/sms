@@ -295,7 +295,7 @@ class SIM800L:
         if '>' in response:
             self.clear_serial()
             self.serial.write(message.encode() + bytes([26]))
-            response = self.read_serial(b'\r\n')
+            response = self.read_serial(b'OK\r\n')
             print(response)
             if "OK" in response:
                 return True
