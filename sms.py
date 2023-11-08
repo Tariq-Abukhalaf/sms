@@ -261,7 +261,7 @@ class SIM800L:
         if (sim800.set_text_mode(0)):
             self.clear_serial()
             self.serial.write(f'AT+CUSD=1,"{ussd_code}",15'.encode())
-            serial_buffer = self.read_serial(self, b'\r\n>')
+            serial_buffer = self.read_serial(b'\r\n>')
             print(serial_buffer)
             if 'OK' in serial_buffer:
                 # serial_buffer  = serial_buffer.replace('+CUSD: 0, ','').replace('"','').replace('OK', '')
