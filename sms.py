@@ -301,7 +301,6 @@ class SIM800L:
         """
             AT command is used to send sms msg
         """
-        self.send_auto_detect_language_sms(message)
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
         response = self.read_serial(b'>')
@@ -318,12 +317,12 @@ class SIM800L:
             return False
         return False
     
-    def send_auto_detect_language_sms(self, message):
-        is_arabic = bool(re.search('[\u0600-\u06FF]', message))
-        text_mode = 'UCS2' if is_arabic else 'GSM'
-        print(text_mode)
-        sim800.set_text_mode(1)
-        sim800.set_charset(text_mode)
+    # def send_auto_detect_language_sms(self, message):
+    #     is_arabic = bool(re.search('[\u0600-\u06FF]', message))
+    #     text_mode = 'UCS2' if is_arabic else 'GSM'
+    #     print(text_mode)
+    #     sim800.set_text_mode(1)
+    #     sim800.set_charset(text_mode)
         
 
 sim800 = SIM800L('/dev/serial0', 115000) 
