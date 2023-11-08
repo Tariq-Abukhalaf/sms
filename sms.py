@@ -254,23 +254,6 @@ class SIM800L:
         return []
     
     @time_it
-    def get_balance(self,ussd_code):
-        """
-            AT command is used to get balance
-        """
-        if (sim800.set_text_mode(0)):
-            self.clear_serial()
-            self.serial.write(f'AT+CUSD=1,"{ussd_code}",15'.encode())
-            serial_buffer = self.read_serial(b'\r\n>')
-            print(serial_buffer)
-            if 'OK' in serial_buffer:
-                # serial_buffer  = serial_buffer.replace('+CUSD: 0, ','').replace('"','').replace('OK', '')
-                balance = serial_buffer
-                return balance
-            return -1
-        return -1
-    
-    @time_it
     def delete_sms(self,id):
         """
             AT command is used to remove sms msg
@@ -352,8 +335,6 @@ sim800.delete_sms(44)
 api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
     print(api_data["fact"])
-
-balance = sim800.get_balance('*155#')
 
 sim800.close()
 
