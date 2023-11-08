@@ -251,7 +251,7 @@ class SIM800L:
             indices = re.findall(r'\+CMGL: (\d+),', serial_buffer)
             int_list = [int(index) for index in indices]
             return int_list
-        return -1
+        return []
     
     @time_it
     def delete_sms(self,id):
