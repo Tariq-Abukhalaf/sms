@@ -331,7 +331,7 @@ sim800.delete_sms(44)
 
 api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
-    print(api_data.fact)
+    print(api_data["fact"])
 
 sim800.close()
 
