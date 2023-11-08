@@ -266,7 +266,7 @@ class SIM800L:
             self.set_timeout(0.1)
             print(serial_buffer)
             if 'OK' in serial_buffer:
-                serial_buffer  = serial_buffer.replace('+CUSD: 0, ','').replace('"','').replace('OK', '')
+                # serial_buffer  = serial_buffer.replace('+CUSD: 0, ','').replace('"','').replace('OK', '')
                 balance = serial_buffer
                 return balance
             return -1
