@@ -195,6 +195,22 @@ class SIM800L:
         return False
     
     @time_it
+    def set_coding_scheme(self,UCS2=True):
+        """
+            This AT command set the data coding scheme to UCS2 for text mode SMS messages
+        """
+        self.clear_serial()
+        if UCS2:
+            self.serial.write(f'AT+CSMP=17,167,2,25\r\n'.encode())
+        else:
+            self.serial.write(f'AT+CSMP=17,168,0,0\r\n'.encode())
+
+        serial_buffer = self.read_serial()
+        if 'OK' in serial_buffer:
+            return True
+        return False
+    
+    @time_it
     def set_charset(self, mode):
         """
             This AT command selects the character set of the mobile equipment.
@@ -297,32 +313,65 @@ class SIM800L:
         except requests.exceptions.RequestException as e:
             return None
         
+    # def send_sms(self, phone_number, message):
+    #     """
+    #         AT command is used to send sms msg
+    #     """
+    #     self.clear_serial()
+    #     self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
+    #     response = self.read_serial(b'>')
+    #     if '>' in response:
+    #         self.clear_serial()
+    #         self.serial.write(message.encode() + bytes([26]))
+    #         self.set_timeout(3)
+    #         response = self.read_serial(b'OK\r\n')
+    #         print(response)
+    #         self.set_timeout(0.1)
+    #         if "OK" in response:
+    #             return True
+    #         return False
+    #     return False
+
     def send_sms(self, phone_number, message):
         """
             AT command is used to send sms msg
         """
+        self.set_text_mode(1)
+        self.set_coding_scheme(False)
+
+        if self.is_arabic_text(message):
+            message      = self.arabic_text_to_ucs2(message)
+            phone_number = self.arabic_text_to_ucs2(phone_number)
+            self.set_coding_scheme(True)
+            self.set_charset('UCS2')
+            
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
         response = self.read_serial(b'>')
         if '>' in response:
             self.clear_serial()
             self.serial.write(message.encode() + bytes([26]))
-            self.set_timeout(3)
+            self.set_timeout(5)
             response = self.read_serial(b'OK\r\n')
-            print(response)
             self.set_timeout(0.1)
             if "OK" in response:
                 return True
             return False
         return False
     
-    # def send_auto_detect_language_sms(self, message):
-    #     is_arabic = bool(re.search('[\u0600-\u06FF]', message))
-    #     text_mode = 'UCS2' if is_arabic else 'GSM'
-    #     print(text_mode)
-    #     sim800.set_text_mode(1)
-    #     sim800.set_charset(text_mode)
-        
+    @time_it
+    def arabic_text_to_ucs2(self,text):
+        ucs2_chars = [format(ord(char), '04X') for char in text]
+        ucs2_str = ''.join(ucs2_chars)
+        return ucs2_str
+    
+    @time_it
+    def is_arabic_text(self,text):
+        for char in text:
+            if 0x0600 <= ord(char) <= 0x06FF:
+                return True
+        return False
+    
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
@@ -375,7 +424,7 @@ api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
     print(api_data["fact"])
 print('**************************************',end='\n')
-print(sim800.send_sms('0789221769','IBRAHIM'))
+print(sim800.send_sms('0789221769','مرحبا'))
 print('**************************************',end='\n')
 sim800.close()
 
