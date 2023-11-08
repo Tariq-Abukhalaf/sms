@@ -295,7 +295,7 @@ class SIM800L:
         if '>' in response:
             self.clear_serial()
             self.serial.write(message.encode() + bytes([26]))
-            response = self.read_serial(b'OK\r\n')
+            response = self.read_serial(b'OK')
             print(response)
             if "OK" in response:
                 return True
@@ -354,7 +354,7 @@ api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
     print(api_data["fact"])
 print('**************************************',end='\n')
-print(sim800.send_sms('0789221769','hi from tareq'))
+print(sim800.send_sms('0789221769','السلام هههههه'))
 print('**************************************',end='\n')
 sim800.close()
 
