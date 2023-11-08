@@ -294,11 +294,10 @@ class SIM800L:
         response = self.read_serial(b'>')
         if '>' in response:
             self.clear_serial()
-            self.serial.write(message.encode() + bytes([26]))
+            self.serial.write(message + bytes([26]))
             self.set_timeout(3)
             response = self.read_serial(b'OK\r\n')
             self.set_timeout(0.1)
-            print(response)
             if "OK" in response:
                 return True
             return False
