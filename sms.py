@@ -2,6 +2,7 @@ import serial
 import re
 import time
 from decorator import time_it
+import requests
 
 class SIM800L:
     def __init__(self, serial_port, baud_rate):
@@ -270,8 +271,19 @@ class SIM800L:
             AT command is used to delete all msgs
         """
         pass
-        
 
+    def get_api_data(api_uri):
+        try:
+            response = requests.get(api_uri)
+            if response.status_code == 200:
+                data = response.json() 
+                return data
+            else:
+                print(f"API Request failed with status code: {response.status_code}")
+                return None
+        except requests.exceptions.RequestException as e:
+            print(f"An error occurred: {e}")
+            return None
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
@@ -318,6 +330,9 @@ for index in list_sms_indices:
     print('------------------',end='\n')
 
 sim800.delete_sms(44)
+
+api_data = sim800.get_api_data("https://catfact.ninja/fact")
+print(api_data)
 
 sim800.close()
 
