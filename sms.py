@@ -260,7 +260,18 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(f'AT+CMGD={id}\r\n'.encode())
         serial_buffer = self.read_serial()
-        print(serial_buffer)
+        if 'OK' in serial_buffer:
+           return True
+        return False
+    
+    @time_it
+    def delete_sms_all(self):
+        """
+            AT command is used to delete all msgs
+        """
+        self.clear_serial()
+        self.serial.write(f'AT+CMGD={id}\r\n'.encode())
+        serial_buffer = self.read_serial()
         if 'OK' in serial_buffer:
            return True
         return False
