@@ -272,17 +272,15 @@ class SIM800L:
         """
         pass
 
-    def get_api_data(api_uri):
+    def get_api_data(self,api_uri):
         try:
             response = requests.get(api_uri)
             if response.status_code == 200:
                 data = response.json() 
                 return data
             else:
-                print(f"API Request failed with status code: {response.status_code}")
                 return None
         except requests.exceptions.RequestException as e:
-            print(f"An error occurred: {e}")
             return None
 
 sim800 = SIM800L('/dev/serial0', 115000) 
@@ -332,7 +330,8 @@ for index in list_sms_indices:
 sim800.delete_sms(44)
 
 api_data = sim800.get_api_data("https://catfact.ninja/fact")
-print(api_data)
+if api_data:
+    print(api_data)
 
 sim800.close()
 
