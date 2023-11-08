@@ -290,7 +290,7 @@ class SIM800L:
             AT command is used to send sms msg
         """
         self.clear_serial()
-        self.serial.write(f'AT+CMGS="{phone_number}"'.encode())
+        self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
         response = self.read_serial(b'>')
         print(response)
         if '>' in response:
