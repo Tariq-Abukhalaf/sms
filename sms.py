@@ -320,7 +320,7 @@ list_sms_indices = sim800.list_sms_indices()
 print(list_sms_indices)
 print('**************************************',end='\n')
 
-if list_sms_indices == []:
+if len(list_sms_indices) != 0:
     for index in list_sms_indices:
         index,status,phone,dt_message,message= sim800.read_sms(index)
         print('Message Index:',index,end='\n')
