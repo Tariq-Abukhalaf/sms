@@ -193,6 +193,7 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(f'AT+CMGF={mode}\r\n'.encode())
         serial_buffer = self.read_serial()
+        print(serial_buffer)
         if 'OK' in serial_buffer:
             return True
         return False
@@ -263,7 +264,7 @@ class SIM800L:
         """
         if (sim800.set_text_mode(0)):
             self.clear_serial()
-            self.serial.write(f'AT+CUSD=1,"{ussd_code}"'.encode())
+            self.serial.write(f'AT+CUSD=1,"{ussd_code}",15'.encode())
             time.sleep(4)
             serial_buffer = self.rs()
             
