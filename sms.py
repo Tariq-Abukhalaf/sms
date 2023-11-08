@@ -202,7 +202,6 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(f'AT+CSCS="{mode}"\r\n'.encode())
         serial_buffer = self.read_serial()
-        print(serial_buffer)
         if 'OK' in serial_buffer:
             return True
         return False
