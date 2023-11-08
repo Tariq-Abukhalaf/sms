@@ -19,15 +19,7 @@ class SIM800L:
         self.serial.close()
 
     def read_serial(self, prompt=b'OK\r\n>'):
-        return self.serial.read_until(prompt).decode('utf-8')
-    
-    def rs(self):
-        while not self.serial.in_waiting:
-            time.sleep(0.04)
-        if self.serial.in_waiting:
-            return self.serial.read(self.serial.in_waiting).decode('utf-8')
-        return ""
-
+        return self.serial.read_until(prompt).decode('utf-8') 
         
     @time_it
     def signal_strength(self):
@@ -198,7 +190,6 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(f'AT+CMGF={mode}\r\n'.encode())
         serial_buffer = self.read_serial()
-        print(serial_buffer)
         if 'OK' in serial_buffer:
             return True
         return False
