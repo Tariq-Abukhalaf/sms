@@ -317,7 +317,7 @@ for index in list_sms_indices:
     print('Message:',message,end='\n')
     print('------------------',end='\n')
 
-print(sim800.delete_sms(44))
+sim800.delete_sms(44)
 
 sim800.close()
 
