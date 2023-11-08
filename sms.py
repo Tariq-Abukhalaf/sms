@@ -338,6 +338,7 @@ class SIM800L:
         """
         self.set_text_mode(1)
         self.set_coding_scheme(False)
+        self.set_charset('IRA')
 
         if self.is_arabic_text(message):
             message      = self.arabic_text_to_ucs2(message)
