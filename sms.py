@@ -251,6 +251,20 @@ class SIM800L:
             int_list = [int(index) for index in indices]
             return int_list
         return -1
+    
+    @time_it
+    def delete_sms(self,id):
+        """
+            AT command is used to remove sms msg
+        """
+        self.clear_serial()
+        self.serial.write(f'AT+CMGD={id}\r\n'.encode())
+        serial_buffer = self.read_serial()
+        print(serial_buffer)
+        if 'OK' in serial_buffer:
+           return True
+        return False
+        
 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
@@ -296,6 +310,8 @@ for index in list_sms_indices:
     print('Timestamp:',dt_message,end='\n')
     print('Message:',message,end='\n')
     print('------------------',end='\n')
+
+print(sim800.delete_sms(44))
 
 sim800.close()
 
