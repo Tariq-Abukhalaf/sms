@@ -292,6 +292,7 @@ class SIM800L:
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"'.encode())
         response = self.read_serial(b'>')
+        print(response)
         if '>' in response:
             self.clear_serial()
             self.serial.write(message.encode() + bytes([26]))
