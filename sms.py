@@ -263,7 +263,7 @@ class SIM800L:
         """
         if (sim800.set_text_mode(0)):
             self.clear_serial()
-            self.serial.write(f'AT+CUSD=1,"{ussd_code}",15\r\n'.encode())
+            self.serial.write(f'AT+CUSD=1,"{ussd_code}"\r\n'.encode())
             time.sleep(4)
             serial_buffer = self.rs()
             
