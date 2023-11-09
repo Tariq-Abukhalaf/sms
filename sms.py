@@ -393,17 +393,17 @@ if len(list_sms_indices) != 0:
         print('Message:',message,end='\n')
         print('------------------',end='\n')
 
-sim800.delete_sms(44)
-print('**************************************',end='\n')
+# sim800.delete_sms(44)
+# print('**************************************',end='\n')
 
-api_data = sim800.get_api_data("https://catfact.ninja/fact")
-if api_data:
-    fact = api_data["fact"]
-    fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
-    fact = "اللغز الذي نبحث عن مكانه، الحياة ذاك الشيء البعيد الذي نعيش به ولأجله، ولكننا غير مدركين السر الذي سيوصلنا للنجاة، لمعنى أن نصبح أُناساً قادرين على مواجهتها بقوة وحزم أشد، لكنني دائماً على ثقة تامة بأنها وجدت لنتحداها، لنثبت أننا خلقنا لأمر ما عظيم ذي شأن أعظم"
-    print(sim800.send_sms('0789221769',fact))
+# api_data = sim800.get_api_data("https://catfact.ninja/fact")
+# if api_data:
+#     fact = api_data["fact"]
+#     fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+#     fact = "اللغز الذي نبحث عن مكانه، الحياة ذاك الشيء البعيد الذي نعيش به ولأجله، ولكننا غير مدركين السر الذي سيوصلنا للنجاة، لمعنى أن نصبح أُناساً قادرين على مواجهتها بقوة وحزم أشد، لكنني دائماً على ثقة تامة بأنها وجدت لنتحداها، لنثبت أننا خلقنا لأمر ما عظيم ذي شأن أعظم"
+#     print(sim800.send_sms('0789221769',fact))
 
-print('**************************************',end='\n')
+# print('**************************************',end='\n')
 
 
 # print(sim800.send_sms('0789221769','وانه لجهاد نصر او استشهاد'))
