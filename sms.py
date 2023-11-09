@@ -445,8 +445,8 @@ while True:
     api_data = sim800.get_api_data("https://catfact.ninja/fact")
     if api_data:
         fact = api_data["fact"]
-        # ara = ['السلام عليكم ورحمة الله ','هلا كيف حالك ايها الاخ','هههههه  ايها الوغد اللعين']
-        # fact = random.choice(ara)
+        ara = ['السلام عليكم ورحمة الله ','هلا كيف حالك ايها الاخ','هههههه  ايها الوغد اللعين']
+        fact = random.choice(ara)
         print(sim800.send_sms('0789221769',fact))
         counter += 1
 
