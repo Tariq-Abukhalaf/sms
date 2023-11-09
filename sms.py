@@ -354,9 +354,9 @@ class SIM800L:
         self.set_charset('IRA')
 
         if self.text_processor.is_arabic(message):
-            if len(message)>70:
-                print('char exceeds!',end='\n')
-                return False
+            # if len(message)>70:
+            #     print('char exceeds!',end='\n')
+            #     return False
             
             message      = self.text_processor.convert_to_ucs2(message)
             phone_number = self.text_processor.convert_to_ucs2(phone_number)
