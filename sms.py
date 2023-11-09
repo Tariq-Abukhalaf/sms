@@ -360,7 +360,7 @@ class SIM800L:
             self.set_charset('UCS2')
 
         if len(message)>160:
-            print('char exceeds!')
+            print('char exceeds!',message,end='\n')
             
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
@@ -446,7 +446,7 @@ while True:
     if api_data:
         fact = api_data["fact"]
         fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 per hifgtrtq56789hi from otw"
-        fact = "المقالة نوع من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهتمُّ بالمظاهر الخارجية للموضوع بطريقة سهلةٍ سريعة، ولا تعنى إلا بالناحية التي تمسُّ الكاتب عن قرب"
+        fact = "المقالة نوع من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهتمُّ بالمظاهر الخارجية للموضوع بطريقة سهلةٍ سريعة، ولا تعنى إلا بالناحية التي تمسُّ الكاتب "
         # ara = ['السلام عليكم ورحمة الله ','هلا كيف حالك ايها الاخ','هههههه  ايها الوغد اللعين']
         # fact = random.choice(ara)
         print(sim800.send_sms('0789221769',fact))
