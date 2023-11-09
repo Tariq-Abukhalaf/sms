@@ -378,7 +378,9 @@ class SIM800L:
             self.set_timeout(0.1)
             if "OK" in response:
                 return True
+            print('no ok in response')
             return False
+        print('no > in response')
         return False
     
     # @time_it
