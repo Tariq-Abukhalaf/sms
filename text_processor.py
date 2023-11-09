@@ -23,22 +23,22 @@ class TextProcessor:
         return ucs2_str
 
 
-Message Index: 44
-Status: REC READ
-Phone Number Sender: 002B003900360032003700380039003200320031003700360039
-Timestamp: 23/11/09 15:38:40+12
-Message: اللغز الذي نبحث عن مكانه، الحياة ذاك الشيء البعيد الذي نعيش به ولأج
+# Message Index: 44
+# Status: REC READ
+# Phone Number Sender: 002B003900360032003700380039003200320031003700360039
+# Timestamp: 23/11/09 15:38:40+12
+# Message: اللغز الذي نبحث عن مكانه، الحياة ذاك الشيء البعيد الذي نعيش به ولأج
 
 
-Message Index: 72
-Status: REC READ
-Phone Number Sender: 002B003900360032003700380039003200320031003700360039
-Timestamp: 23/11/09 15:38:47+12
-Message: له، ولكننا غير مدركين السر الذي سيوصلنا للنجاة، لمعنى أن نصبح أُناس
-------------------
+# Message Index: 72
+# Status: REC READ
+# Phone Number Sender: 002B003900360032003700380039003200320031003700360039
+# Timestamp: 23/11/09 15:38:47+12
+# Message: له، ولكننا غير مدركين السر الذي سيوصلنا للنجاة، لمعنى أن نصبح أُناس
+# ------------------
 
-Message Index: 73
-Status: REC READ
-Phone Number Sender: 002B003900360032003700380039003200320031003700360039
-Timestamp: 23/11/09 15:38:50+12
-Message: اً قادرين على مواجهتها بقوة وحزم أشد واقوى
+# Message Index: 73
+# Status: REC READ
+# Phone Number Sender: 002B003900360032003700380039003200320031003700360039
+# Timestamp: 23/11/09 15:38:50+12
+# Message: اً قادرين على مواجهتها بقوة وحزم أشد واقوى
