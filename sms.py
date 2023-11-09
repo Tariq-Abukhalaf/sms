@@ -354,22 +354,24 @@ class SIM800L:
         self.set_charset('IRA')
 
         if self.text_processor.is_arabic(message):
-            if len(message)>70:
-                print('char exceeds!!!',end='\n')
-                return False
+            # if len(message)>70:
+            #     print('char exceeds!!!',end='\n')
+            #     return False
             
             message      = self.text_processor.convert_to_ucs2(message)
             phone_number = self.text_processor.convert_to_ucs2(phone_number)
             self.set_coding_scheme(True)
             self.set_charset('UCS2')
 
-        if len(message)>160:
-            print('char exceeds!',end='\n')
-            return False
+        # if len(message)>160:
+        #     print('char exceeds!',end='\n')
+        #     return False
             
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
+        self.set_timeout(3)
         response = self.read_serial(b'>')
+        self.set_timeout(0.1)
         if '>' in response:
             self.clear_serial()
             self.serial.write(message.encode() + bytes([26]))
