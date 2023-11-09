@@ -2,11 +2,13 @@ import serial
 import re
 import time
 from decorator import time_it
+from text_processor import TextProcessor
 import requests
 
 class SIM800L:
     def __init__(self, serial_port, baud_rate):
         self.serial = serial.Serial(serial_port, baud_rate, timeout=0.1)
+        self.text_processor = TextProcessor()
 
     def set_timeout(self,timeout=0.1):
         self.serial.timeout = timeout
@@ -317,15 +319,24 @@ class SIM800L:
     #     """
     #         AT command is used to send sms msg
     #     """
+    #     self.set_text_mode(1)
+    #     self.set_coding_scheme(False)
+    #     self.set_charset('IRA')
+
+    #     if self.is_arabic_text(message):
+    #         message      = self.arabic_text_to_ucs2(message)
+    #         phone_number = self.arabic_text_to_ucs2(phone_number)
+    #         self.set_coding_scheme(True)
+    #         self.set_charset('UCS2')
+            
     #     self.clear_serial()
     #     self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
     #     response = self.read_serial(b'>')
     #     if '>' in response:
     #         self.clear_serial()
     #         self.serial.write(message.encode() + bytes([26]))
-    #         self.set_timeout(3)
+    #         self.set_timeout(5)
     #         response = self.read_serial(b'OK\r\n')
-    #         print(response)
     #         self.set_timeout(0.1)
     #         if "OK" in response:
     #             return True
@@ -340,9 +351,9 @@ class SIM800L:
         self.set_coding_scheme(False)
         self.set_charset('IRA')
 
-        if self.is_arabic_text(message):
-            message      = self.arabic_text_to_ucs2(message)
-            phone_number = self.arabic_text_to_ucs2(phone_number)
+        if self.text_processor.is_arabic(message):
+            message      = self.text_processor.convert_to_ucs2(message)
+            phone_number = self.text_processor.convert_to_ucs2(phone_number)
             self.set_coding_scheme(True)
             self.set_charset('UCS2')
             
@@ -360,18 +371,18 @@ class SIM800L:
             return False
         return False
     
-    @time_it
-    def arabic_text_to_ucs2(self,text):
-        ucs2_chars = [format(ord(char), '04X') for char in text]
-        ucs2_str = ''.join(ucs2_chars)
-        return ucs2_str
+    # @time_it
+    # def arabic_text_to_ucs2(self,text):
+    #     ucs2_chars = [format(ord(char), '04X') for char in text]
+    #     ucs2_str = ''.join(ucs2_chars)
+    #     return ucs2_str
     
-    @time_it
-    def is_arabic_text(self,text):
-        for char in text:
-            if 0x0600 <= ord(char) <= 0x06FF:
-                return True
-        return False
+    # @time_it
+    # def is_arabic_text(self,text):
+    #     for char in text:
+    #         if 0x0600 <= ord(char) <= 0x06FF:
+    #             return True
+    #     return False
     
 
 sim800 = SIM800L('/dev/serial0', 115000) 
@@ -425,7 +436,7 @@ api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
     print(api_data["fact"])
 print('**************************************',end='\n')
-print(sim800.send_sms('0789221769','S’il vous plaît'))
+print(sim800.send_sms('0789221769','وانه لجهاد نصر او استشهاد'))
 print('**************************************',end='\n')
 sim800.close()
 
