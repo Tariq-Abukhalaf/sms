@@ -359,9 +359,8 @@ class SIM800L:
             self.set_coding_scheme(True)
             self.set_charset('UCS2')
 
-        # if len(message)>145:
-        #     print('char exceeds!')
-        #     return False
+        if len(message)>160:
+            print('char exceeds!')
             
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
