@@ -358,6 +358,10 @@ class SIM800L:
             phone_number = self.text_processor.convert_to_ucs2(phone_number)
             self.set_coding_scheme(True)
             self.set_charset('UCS2')
+
+        if len(message)>145:
+            print('char exceeds!')
+            return False
             
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
@@ -442,8 +446,8 @@ while True:
     api_data = sim800.get_api_data("https://catfact.ninja/fact")
     if api_data:
         fact = api_data["fact"]
-        ara = ['السلام عليكم ورحمة الله ','هلا كيف حالك ايها الاخ','هههههه  ايها الوغد اللعين']
-        fact = random.choice(ara)
+        # ara = ['السلام عليكم ورحمة الله ','هلا كيف حالك ايها الاخ','هههههه  ايها الوغد اللعين']
+        # fact = random.choice(ara)
         print(sim800.send_sms('0789221769',fact))
         counter += 1
 
