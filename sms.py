@@ -4,6 +4,8 @@ import time
 from decorator import time_it
 from text_processor import TextProcessor
 import requests
+import random
+
 
 class SIM800L:
     def __init__(self, serial_port, baud_rate):
@@ -441,6 +443,8 @@ while True:
     api_data = sim800.get_api_data("https://catfact.ninja/fact")
     if api_data:
         fact = api_data["fact"]
+        # ara = ['السلام عليكم ورحمة الله ','هلا كيف حالك ايها الاخ','هههههه  ايها الوغد اللعين']
+        # fact = random.choice(ara)
         print(sim800.send_sms('0789221769',fact))
         counter += 1
 
