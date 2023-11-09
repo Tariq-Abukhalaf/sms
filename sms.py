@@ -432,12 +432,20 @@ if len(list_sms_indices) != 0:
 
 sim800.delete_sms(44)
 print('**************************************',end='\n')
-api_data = sim800.get_api_data("https://catfact.ninja/fact")
-if api_data:
-    print(api_data["fact"])
-print('**************************************',end='\n')
-print(sim800.send_sms('0789221769','وانه لجهاد نصر او استشهاد'))
-print('**************************************',end='\n')
+
+
+while True:
+    time.sleep(3)
+    api_data = sim800.get_api_data("https://catfact.ninja/fact")
+    if api_data:
+        fact = api_data["fact"]
+        print(sim800.send_sms('0789221769',fact))
+    
+# print('**************************************',end='\n')
+# print(sim800.send_sms('0789221769','وانه لجهاد نصر او استشهاد'))
+# print('**************************************',end='\n')
+
+
 sim800.close()
 
 
