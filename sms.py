@@ -448,7 +448,7 @@ while True:
     if api_data:
         fact = api_data["fact"]
         fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 per hifgtrtq56789hi from otw"
-        # fact = "المقالة نوع من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهتمُّ بالمظاهر الخارجية للموضوع بطريقة سهلةٍ سريعة، ولا تعنى إلا بالناحية التي تمسُّ الكاتب "
+        fact = "المقالة نوع من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهتمُّ بالمظاهر الخارجية للموضوع بطريقة سهلةٍ سريعة، ولا تعنى إلا بالناحية التي تمسُّ الكاتب "
         # ara = ['السلام عليكم ورحمة الله ','هلا كيف حالك ايها الاخ','هههههه  ايها الوغد اللعين']
         # fact = random.choice(ara)
         print(sim800.send_sms('0789221769',fact))
