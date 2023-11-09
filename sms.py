@@ -353,7 +353,7 @@ class SIM800L:
         self.set_coding_scheme(False)
         self.set_charset('IRA')
 
-        print('char:',message,end='\n')
+        print('char:',len(message),end='\n')
 
         if self.text_processor.is_arabic(message):
             message      = self.text_processor.convert_to_ucs2(message)
@@ -362,7 +362,7 @@ class SIM800L:
             self.set_charset('UCS2')
 
         if len(message)>160:
-            print('char exceeds!',message,end='\n')
+            print('char exceeds!',end='\n')
             
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
