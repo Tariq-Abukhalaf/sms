@@ -353,9 +353,11 @@ class SIM800L:
         self.set_coding_scheme(False)
         self.set_charset('IRA')
 
-        print('char:',len(message),end='\n')
-
         if self.text_processor.is_arabic(message):
+            if len(message)>70:
+                print('char exceeds!',end='\n')
+                return False
+            
             message      = self.text_processor.convert_to_ucs2(message)
             phone_number = self.text_processor.convert_to_ucs2(phone_number)
             self.set_coding_scheme(True)
@@ -363,6 +365,7 @@ class SIM800L:
 
         if len(message)>160:
             print('char exceeds!',end='\n')
+            return False
             
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
@@ -440,25 +443,18 @@ if len(list_sms_indices) != 0:
 sim800.delete_sms(44)
 print('**************************************',end='\n')
 
-counter = 0
-while True:
-    if(counter == 1):
-        break
-    api_data = sim800.get_api_data("https://catfact.ninja/fact")
-    if api_data:
-        fact = api_data["fact"]
-        fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 per hifgtrtq56789hi from otw"
-        fact = "المقالة نوع من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهت"
-        # ara = ['السلام عليكم ورحمة الله ','هلا كيف حالك ايها الاخ','هههههه  ايها الوغد اللعين']
-        # fact = random.choice(ara)
-        print(sim800.send_sms('0789221769',fact))
-        counter += 1
+api_data = sim800.get_api_data("https://catfact.ninja/fact")
+if api_data:
+    fact = api_data["fact"]
+    fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 per hifgtrtq56789hi from otw"
+    # fact = "المقالة نوع من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهت"
+    print(sim800.send_sms('0789221769',fact))
 
-# print('**************************************',end='\n')
+print('**************************************',end='\n')
+
+
 # print(sim800.send_sms('0789221769','وانه لجهاد نصر او استشهاد'))
 # print('**************************************',end='\n')
-
-
 sim800.close()
 
 

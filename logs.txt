@@ -1,0 +1,28 @@
+************************** ZAIN JO ********************************
+
+Signal Strength: 83.87
+ICCID: 89962011000160935955
+Device Information: SIM800 R14.18
+Modem Name: SIM800
+Sim Status: READY
+Sim Response: OK
+IMSI: 416011016093595
+MCC: 416
+MNC: 01
+Service Provider: ZAIN JO
+Network : FASTLINK
+
+************************** ORANGE JO ******************************
+
+Signal Strength: 83.87
+ICCID: 8996277010560617686f
+Device Information: SIM800 R14.18
+Modem Name: SIM800
+Sim Status: READY
+Sim Response: OK
+IMSI: 416770126242644
+MCC: 416
+MNC: 77
+Service Provider: ORANGE JO
+Network : MOBILECOM
+
