@@ -447,7 +447,7 @@ api_data = sim800.get_api_data("https://catfact.ninja/fact")
 if api_data:
     fact = api_data["fact"]
     fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 per hifgtrtq56789hi from otwyyyy"
-    fact = "غغغغغغغغغالمقالة نوع من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهت"
+    fact = "من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهت"
     print(sim800.send_sms('0789221769',fact))
 
 print('**************************************',end='\n')
