@@ -369,9 +369,7 @@ class SIM800L:
             
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
-        self.set_timeout(8)
         response = self.read_serial(b'>')
-        self.set_timeout(0.1)
         if '>' in response:
             self.clear_serial()
             self.serial.write(message.encode() + bytes([26]))
