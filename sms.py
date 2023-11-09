@@ -439,7 +439,6 @@ counter = 0
 while True:
     if(counter == 3):
         break
-    time.sleep(3)
     api_data = sim800.get_api_data("https://catfact.ninja/fact")
     if api_data:
         fact = api_data["fact"]
