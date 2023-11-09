@@ -317,33 +317,6 @@ class SIM800L:
         except requests.exceptions.RequestException as e:
             return None
         
-    # def send_sms(self, phone_number, message):
-    #     """
-    #         AT command is used to send sms msg
-    #     """
-    #     self.set_text_mode(1)
-    #     self.set_coding_scheme(False)
-    #     self.set_charset('IRA')
-
-    #     if self.is_arabic_text(message):
-    #         message      = self.arabic_text_to_ucs2(message)
-    #         phone_number = self.arabic_text_to_ucs2(phone_number)
-    #         self.set_coding_scheme(True)
-    #         self.set_charset('UCS2')
-            
-    #     self.clear_serial()
-    #     self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
-    #     response = self.read_serial(b'>')
-    #     if '>' in response:
-    #         self.clear_serial()
-    #         self.serial.write(message.encode() + bytes([26]))
-    #         self.set_timeout(5)
-    #         response = self.read_serial(b'OK\r\n')
-    #         self.set_timeout(0.1)
-    #         if "OK" in response:
-    #             return True
-    #         return False
-    #     return False
 
     def send_sms(self, phone_number, message):
         """
@@ -353,20 +326,12 @@ class SIM800L:
         self.set_coding_scheme(False)
         self.set_charset('IRA')
 
-        if self.text_processor.is_arabic(message):
-            # if len(message)>70:
-            #     print('char exceeds!!!',end='\n')
-            #     return False
-            
+        if self.text_processor.is_arabic(message):        
             message      = self.text_processor.convert_to_ucs2(message)
             phone_number = self.text_processor.convert_to_ucs2(phone_number)
             self.set_coding_scheme(True)
             self.set_charset('UCS2')
-
-        # if len(message)>160:
-        #     print('char exceeds!',end='\n')
-        #     return False
-            
+  
         self.clear_serial()
         self.serial.write(f'AT+CMGS="{phone_number}"\r\n'.encode())
         response = self.read_serial(b'>')
@@ -381,21 +346,7 @@ class SIM800L:
             print('no ok in response')
             return False
         print('no > in response')
-        return False
-    
-    # @time_it
-    # def arabic_text_to_ucs2(self,text):
-    #     ucs2_chars = [format(ord(char), '04X') for char in text]
-    #     ucs2_str = ''.join(ucs2_chars)
-    #     return ucs2_str
-    
-    # @time_it
-    # def is_arabic_text(self,text):
-    #     for char in text:
-    #         if 0x0600 <= ord(char) <= 0x06FF:
-    #             return True
-    #     return False
-    
+        return False 
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
@@ -445,14 +396,14 @@ if len(list_sms_indices) != 0:
 sim800.delete_sms(44)
 print('**************************************',end='\n')
 
-# api_data = sim800.get_api_data("https://catfact.ninja/fact")
-# if api_data:
-#     fact = api_data["fact"]
-#     fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
-#     # fact = "من الأدب، هي قطعة إنشائية، ذات طول معتدل تُكتب نثراً، وتهت"
-#     print(sim800.send_sms('0789221769',fact))
+api_data = sim800.get_api_data("https://catfact.ninja/fact")
+if api_data:
+    fact = api_data["fact"]
+    fact = "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+    fact = "اللغز الذي نبحث عن مكانه، الحياة ذاك الشيء البعيد الذي نعيش به ولأجله، ولكننا غير مدركين السر الذي سيوصلنا للنجاة، لمعنى أن نصبح أُناساً قادرين على مواجهتها بقوة وحزم أشد، لكنني دائماً على ثقة تامة بأنها وجدت لنتحداها، لنثبت أننا خلقنا لأمر ما عظيم ذي شأن أعظم، فكل إنسان على هذه الأرض مستخلف لمهمة ما عليه إنجازها"
+    print(sim800.send_sms('0789221769',fact))
 
-# print('**************************************',end='\n')
+print('**************************************',end='\n')
 
 
 # print(sim800.send_sms('0789221769','وانه لجهاد نصر او استشهاد'))
