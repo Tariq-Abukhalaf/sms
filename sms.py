@@ -367,6 +367,7 @@ class SIM800L:
             self.serial.write(message.encode() + bytes([26]))
             self.set_timeout(5)
             response = self.read_serial(b'OK\r\n')
+            print(response)
             self.set_timeout(0.1)
             if "OK" in response:
                 return True
