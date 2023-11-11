@@ -8,27 +8,31 @@
   </head>
   <body>
     <h1>WiFi Manager</h1>
-    <table>
-        <tr>
-            <th>SSID</th>
-            <th>BSSID</th>
-            <th>MODE</th>
-            <th>FREQ</th>
-            <th>RATE</th>
-            <th>SIGNAL</th>
-            <th>SECURITY</th>
-        </tr>
-        {% for network in wifi_data %}
-        <tr>
-            <td>{{ network.SSID }}</td>
-            <td>{{ network.BSSID }}</td>
-            <td>{{ network.MODE }}</td>
-            <td>{{ network.FREQ }}</td>
-            <td>{{ network.RATE }}</td>
-            <td>{{ network.SIGNAL }}</td>
-            <td>{{ network.SECURITY }}</td>
-        </tr>
-        {% endfor %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">SSID</th>
+              <th scope="col">BSSID</th>
+              <th scope="col">MODE</th>
+              <th scope="col">FREQ</th>
+              <th scope="col">RATE</th>
+              <th scope="col">SIGNAL</th>
+              <th scope="col">SECURITY</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for network in wifi_data %}
+            <tr>
+                <td>{{ network.SSID }}</td>
+                <td>{{ network.BSSID }}</td>
+                <td>{{ network.MODE }}</td>
+                <td>{{ network.FREQ }}</td>
+                <td>{{ network.RATE }}</td>
+                <td>{{ network.SIGNAL }}</td>
+                <td>{{ network.SECURITY }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <form method="post">
         <select name="network">
