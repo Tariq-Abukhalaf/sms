@@ -347,6 +347,27 @@ class SIM800L:
             return False
         print('no > in response')
         return False 
+    
+    def send_concatenated_sms(self, recipient_number, message):
+        max_chars_per_sms = 153
+        total_parts = (len(message) + max_chars_per_sms - 1) // max_chars_per_sms
+
+        for part_number in range(total_parts):
+            start_index = part_number * max_chars_per_sms
+            end_index = (part_number + 1) * max_chars_per_sms
+            part_message = message[start_index:end_index]
+
+            udh = f"{total_parts:02X}{part_number + 1:02X}"
+
+            self.ser.write(b'AT+CMGF=0\r\n') 
+            self.ser.write(f'AT+CMGS={len(part_message) + 7}\r\n'.encode())
+            time.sleep(1)
+            self.ser.write(f'{udh}{recipient_number.encode()}00'.encode())
+            self.ser.write(part_message.encode() + bytes([26]))
+            time.sleep(2)
+            response = self.ser.read(1000)
+            print(response)
+
 
 sim800 = SIM800L('/dev/serial0', 115000) 
 
@@ -408,6 +429,9 @@ if len(list_sms_indices) != 0:
 
 # print(sim800.send_sms('0789221769','وانه لجهاد نصر او استشهاد'))
 # print('**************************************',end='\n')
+
+
+sim800.send_concatenated_sms('0789221769', "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
 sim800.close()
 
 
