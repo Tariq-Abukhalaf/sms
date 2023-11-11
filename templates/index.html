@@ -44,7 +44,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="ssid" class="required">SSID:</label>
+                    <label for="ssid" class="required">ssid:</label>
                     <select name="network" id="ssid" class="form-control">
                         {% for network in networks_list %}
                             <option value="{{ network }}">{{ network }}</option>
@@ -54,8 +54,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="country_iso_code" class="required">Country iso code:</label>
-                    <input type="text" class="form-control form-control-sm" value="BH" disabled="">
+                    <label for="password" class="required">psk:</label>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter WiFi Password">
                 </div>
             </div>
         </div>
