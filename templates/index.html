@@ -43,7 +43,6 @@
                 </table>
             </div>
         </div>
-
         <h3 class="">Add New WiFi</h3>
         <form method="post">
             <div class="row">
@@ -68,14 +67,11 @@
                 </div>
             </div>
         </form>
-
-        <h5 class="">Connections</h3>
         <ul class="list-group list-group-flush">
             {% for connection in nm_connections %}
                 <li class="list-group-item">{{ connection }}</li>
             {% endfor %}
         </ul>
-
     </div>
    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
