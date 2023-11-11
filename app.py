@@ -12,7 +12,7 @@ def parse_wifi_networks():
     wifi_networks = []
     for match in re.finditer(pattern, output, re.MULTILINE):
         wifi_networks.append(match.groupdict())
-    return wifi_networks[1:]
+    return wifi_networks
 
 
 def get_available_network_ssids():
