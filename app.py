@@ -39,7 +39,7 @@ def index():
     
     wifi_data = parse_wifi_networks()
     networks = get_available_network_ssids()
-    return render_template('index.html', wifi_data=wifi_data, networks=networks)
+    return render_template('index.html', wifi_data=wifi_data, networks_list=networks)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=9999)
