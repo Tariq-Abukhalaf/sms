@@ -14,6 +14,44 @@ app = Flask(__name__)
 #         wifi_networks.append(match.groupdict())
 #     return wifi_networks
 
+
+def parse_wifi_networks():
+    try:
+        output = subprocess.check_output(['nmcli', 'device', 'wifi', 'list'], text=True)
+        lines = output.splitlines()
+        wifi_networks = []
+        for line in lines[1:]:
+            columns = line.split()
+            active   = False
+            if len(columns)>9:
+                columns=columns[1:]
+                active = True
+
+            bssid    = columns[0]
+            ssid     = columns[1]
+            mode     = columns[2]
+            chan     = columns[3]
+            rate     = columns[4]+' '+columns[5]
+            signal   = columns[6]
+            bars     = columns[7]
+            security = columns[8]
+
+            wifi_networks.append({
+                "BSSID"   : bssid,
+                "SSID"    : ssid,
+                "MODE"    : mode,
+                "CHAN"    : chan,
+                "RATE"    : rate,
+                "SIGNAL"  : signal,
+                "BARS"    : bars,
+                "SECURITY" : security,
+            })
+        return wifi_networks
+
+    except subprocess.CalledProcessError as e:
+        print(f"Error running 'nmcli': {e}")
+        return []
+
 def parse_wifi_networks():
     output = subprocess.check_output(['nmcli', 'device', 'wifi', 'list'], text=True)
     pattern = r'(?P<INUSE>.+?)\s+(?P<BSSID>.+?)\s+(?P<SSID>\S+)\s+(?P<MODE>\S+)\s+(?P<CHAN>.+?)\s+(?P<RATE>\S+)\s+(?P<SIGNAL>\S+)\s+(?P<BARS>\S+)\s+(?P<SECURITY>.+)$'

@@ -13,9 +13,11 @@
             <tr>
               <th scope="col">BSSID</th>
               <th scope="col">SSID</th>
-              <th scope="col">FREQ</th>
+              <th scope="col">MODE</th>
+              <th scope="col">CHAN</th>
               <th scope="col">RATE</th>
               <th scope="col">SIGNAL</th>
+              <th scope="col">BARS</th>
               <th scope="col">SECURITY</th>
             </tr>
         </thead>
@@ -23,10 +25,12 @@
             {% for network in wifi_data %}
             <tr>
                 <td>{{ network.BSSID }}</td>
+                <td>{{ network.SSID }}</td>
                 <td>{{ network.MODE }}</td>
-                <td>{{ network.FREQ }}</td>
+                <td>{{ network.CHAN }}</td>
                 <td>{{ network.RATE }}</td>
                 <td>{{ network.SIGNAL }}</td>
+                <td>{{ network.BARS }}</td>
                 <td>{{ network.SECURITY }}</td>
             </tr>
             {% endfor %}
