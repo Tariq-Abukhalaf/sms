@@ -259,7 +259,7 @@ class SIM800L:
                 parts          = serial_buffer.split('\n')
                 filtered_list  = [item.replace('\r', '') for item in parts]
                 filtered_list  = [item for item in filtered_list if item.strip()]
-                print(filtered_list)
+                # print(filtered_list)
                 info           = filtered_list[0].split(',')
                 msg            = filtered_list[1].strip()
                 if self.text_processor.is_hexadecimal(msg):   
@@ -432,7 +432,7 @@ if len(list_sms_indices) != 0:
 # print('**************************************',end='\n')
 
 
-sim800.send_concatenated_sms('0789221769', "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+# sim800.send_concatenated_sms('0789221769', "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
 sim800.close()
 
 
