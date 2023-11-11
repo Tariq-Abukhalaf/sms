@@ -43,17 +43,19 @@
         </div>
         <div class="row">
             <form method="post"> 
-                <div class="col">
-                    <label>networks</label>
-                    <select name="network" class="form-control">
-                        {% for network in networks_list %}
-                            <option value="{{ network }}">{{ network }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-        
-                <div class="col">
-                    <input type="password" name="password" class="form-control" placeholder="Enter WiFi Password">
+                <div class="row">
+                    <div class="col">
+                        <label>networks</label>
+                        <select name="network" class="form-control">
+                            {% for network in networks_list %}
+                                <option value="{{ network }}">{{ network }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+            
+                    <div class="col">
+                        <input type="password" name="password" class="form-control" placeholder="Enter WiFi Password">
+                    </div>
                 </div>
         
                 <button type="submit">Connect</button>
