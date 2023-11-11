@@ -14,4 +14,4 @@ def get_available_network_ssids():
         print(f"An error occurred: {str(e)}")
         return []
     
-get_available_network_ssids()
+print(get_available_network_ssids())
