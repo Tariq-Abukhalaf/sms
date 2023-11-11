@@ -6,7 +6,7 @@ def parse_wifi_networks():
     pattern = r'(?P<SSID>.+?)\s+(?P<BSSID>\S+)\s+(?P<MODE>\S+)\s+(?P<FREQ>\S+)\s+(?P<RATE>\S+)\s+(?P<SIGNAL>\S+)\s+(?P<SECURITY>.+)$'
     wifi_networks = []
     for match in re.finditer(pattern, output, re.MULTILINE):
-        wifi_networks.append(match.groupdict())
+        wifi_networks.append(match.groupdict()+'\n')
     return wifi_networks
     
 print(parse_wifi_networks())
