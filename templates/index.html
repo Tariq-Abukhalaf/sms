@@ -50,7 +50,6 @@
         <div class="row mb-4">
             <div class="col-md-5">
                 <div class="form-group">
-                    <label for="ssid" class="required">ssid:</label>
                     <select name="network" id="ssid" class="form-control">
                         {% for network in networks_list %}
                             <option value="{{ network }}">{{ network }}</option>
@@ -60,7 +59,6 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <label for="password" class="required">psk:</label>
                     <input type="password" name="password" id="password" class="form-control" placeholder="Enter WiFi Password">
                 </div>
             </div>
