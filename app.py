@@ -3,6 +3,7 @@
 from flask import Flask, render_template, request
 import subprocess
 import re
+import os
 
 app = Flask(__name__)
 
@@ -58,18 +59,26 @@ def get_available_network_ssids():
         print(f"An error occurred: {str(e)}")
         return []
 
+def get_nm_connections():
+    try:
+        files = os.listdir('/etc/NetworkManager/system-connections')
+        return files
+    except FileNotFoundError:
+        return None
+    
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         selected_network = request.form['network']
         password = request.form['password']
-        
+
         with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'a') as wpa_conf:
             wpa_conf.write(f'network={{\n  ssid="{selected_network}"\n  psk="{password}"\n}}\n')
     
     wifi_data = parse_wifi_list()
     networks = get_available_network_ssids()
-    return render_template('index.html', wifi_data=wifi_data, networks_list=networks)
+    nm_connections = get_nm_connections()
+    return render_template('index.html', wifi_data=wifi_data, networks_list=networks, nm_connections=nm_connections)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=9999)
