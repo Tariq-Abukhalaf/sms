@@ -404,7 +404,7 @@ print('**************************************',end='\n')
 list_sms_indices = sim800.list_sms_indices()
 print(list_sms_indices)
 print('**************************************',end='\n')
-sim800.delete_sms(59)
+# sim800.delete_sms(59)
 if len(list_sms_indices) != 0:
     for index in list_sms_indices:
         index,status,phone,dt_message,message= sim800.read_sms(index)
@@ -432,7 +432,7 @@ if len(list_sms_indices) != 0:
 # print('**************************************',end='\n')
 
 
-sim800.send_concatenated_sms('0789221769', "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+# sim800.send_concatenated_sms('0789221769', "There are approximately 60,000 hairs per square inch on the back of a cat and about 120,000 per square inch on its underside.120,000 hi from other side hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
 sim800.close()
 
 
