@@ -26,13 +26,13 @@
                     </thead>
                     <tbody>
                         {% for network in wifi_data %}
-                        <tr>
+                        <tr style="{% if network.SIGNAL|float > 90 %}background-color: green{% else %} {% endif %}">
                             <td>{{ network.BSSID }}</td>
                             <td>{{ network.SSID }}</td>
                             <td>{{ network.MODE }}</td>
                             <td>{{ network.CHAN }}</td>
                             <td>{{ network.RATE }}</td>
-                            <td style="{% if network.SIGNAL|float > 90 %}background-color: green{% else %} {% endif %}" >{{ network.SIGNAL }}</td>
+                            <td>{{ network.SIGNAL }}</td>
                             <td>{{ network.BARS }}</td>
                             <td>{{ network.SECURITY }}</td>
                         </tr>
