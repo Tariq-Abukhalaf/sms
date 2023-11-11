@@ -11,6 +11,7 @@ def parse_wifi_list():
             if len(columns)>9:
                 columns=columns[1:]
                 active = True
+                print('$$$$$$')
 
             bssid    = columns[0]
             ssid     = columns[1]
