@@ -59,6 +59,9 @@ def get_available_network_ssids():
         print(f"An error occurred: {str(e)}")
         return []
 
+
+
+
 def get_nm_connections():
     try:
         files = os.listdir('/etc/NetworkManager/system-connections')
