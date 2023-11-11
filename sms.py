@@ -403,7 +403,7 @@ print('**************************************',end='\n')
 list_sms_indices = sim800.list_sms_indices()
 print(list_sms_indices)
 print('**************************************',end='\n')
-
+sim800.delete_sms(60)
 if len(list_sms_indices) != 0:
     for index in list_sms_indices:
         index,status,phone,dt_message,message= sim800.read_sms(index)
@@ -414,7 +414,7 @@ if len(list_sms_indices) != 0:
         print('Message:',message,end='\n')
         print('------------------',end='\n')
 
-# sim800.delete_sms(44)
+# sim800.delete_sms(60)
 # print('**************************************',end='\n')
 
 # api_data = sim800.get_api_data("https://catfact.ninja/fact")
