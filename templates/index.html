@@ -43,37 +43,39 @@
                 </table>
             </div>
         </div>
-        
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
 
         <h3 class="">Add New WiFi</h3>
-        <div class="row">
-            <div class="col-md-5">
-                <div class="form-group">
-                    <select name="network" id="ssid" class="form-control">
-                        {% for network in networks_list %}
-                            <option value="{{ network }}">{{ network }}</option>
-                        {% endfor %}
-                    </select>
+        <form method="post">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <select name="network" id="ssid" class="form-control">
+                            {% for network in networks_list %}
+                                <option value="{{ network }}">{{ network }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Enter WiFi Password">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block btn-dark mb-2">Add</button>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <div class="form-group">
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter WiFi Password">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-dark mb-2">Add</button>
-                </div>
-            </div>
-        </div>
+        </form>
+
+        <h5 class="">Connections</h3>
+        <ul class="list-group list-group-flush">
+            {% for connection in nm_connections %}
+                <li class="list-group-item">{{ connection }}</li>
+            {% endfor %}
+        </ul>
+
     </div>
    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
