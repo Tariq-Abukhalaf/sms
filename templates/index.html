@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WiFi Manager</title>
+</head>
+<body>
+    <h1>WiFi Manager</h1>
+    <form method="post">
+        <select name="network">
+            {% for network in networks %}
+                <option value="{{ network }}">{{ network }}</option>
+            {% endfor %}
+        </select>
+        <input type="password" name="password" placeholder="Enter WiFi Password">
+        <button type="submit">Connect</button>
+    </form>
+</body>
+</html>
