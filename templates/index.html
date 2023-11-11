@@ -6,6 +6,28 @@
 </head>
 <body>
     <h1>WiFi Manager</h1>
+    <table>
+        <tr>
+            <th>SSID</th>
+            <th>BSSID</th>
+            <th>MODE</th>
+            <th>FREQ</th>
+            <th>RATE</th>
+            <th>SIGNAL</th>
+            <th>SECURITY</th>
+        </tr>
+        {% for network in wifi_data %}
+        <tr>
+            <td>{{ network.SSID }}</td>
+            <td>{{ network.BSSID }}</td>
+            <td>{{ network.MODE }}</td>
+            <td>{{ network.FREQ }}</td>
+            <td>{{ network.RATE }}</td>
+            <td>{{ network.SIGNAL }}</td>
+            <td>{{ network.SECURITY }}</td>
+        </tr>
+        {% endfor %}
+    </table>
     <form method="post">
         <select name="network">
             {% for network in networks %}

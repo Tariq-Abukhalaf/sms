@@ -2,8 +2,18 @@
 
 from flask import Flask, render_template, request
 import subprocess
+import re
 
 app = Flask(__name__)
+
+def parse_wifi_networks():
+    output = subprocess.check_output(['nmcli', 'device', 'wifi', 'list'], text=True)
+    pattern = r'(?P<SSID>.+?)\s+(?P<BSSID>\S+)\s+(?P<MODE>\S+)\s+(?P<FREQ>\S+)\s+(?P<RATE>\S+)\s+(?P<SIGNAL>\S+)\s+(?P<SECURITY>.+)$'
+    wifi_networks = []
+    for match in re.finditer(pattern, output, re.MULTILINE):
+        wifi_networks.append(match.groupdict())
+    return wifi_networks
+
 
 def get_available_network_ssids():
     try:
@@ -26,8 +36,10 @@ def index():
         password = request.form['password']
         with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'a') as wpa_conf:
             wpa_conf.write(f'network={{\n  ssid="{selected_network}"\n  psk="{password}"\n}}\n')
+    
+    wifi_data = parse_wifi_networks()
     networks = get_available_network_ssids()
-    return render_template('index.html', networks=networks)
+    return render_template('index.html', wifi_data=wifi_data, networks=networks)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=9999)
