@@ -44,6 +44,7 @@ def parse_wifi_list():
                 "SIGNAL"  : signal,
                 "BARS"    : bars,
                 "SECURITY" : security,
+                "ACTIVE"  : active,
             })
         return wifi_networks
 
