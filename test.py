@@ -5,3 +5,6 @@ def get_available_networks():
     networks = [line.strip() for line in result.stdout.split('ESSID:')[1:]]
     print(networks)
     return networks
+
+
+get_available_networks()
