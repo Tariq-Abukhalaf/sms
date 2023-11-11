@@ -14,8 +14,7 @@ app = Flask(__name__)
 #         wifi_networks.append(match.groupdict())
 #     return wifi_networks
 
-
-def parse_wifi_networks():
+def parse_wifi_list():
     try:
         output = subprocess.check_output(['nmcli', 'device', 'wifi', 'list'], text=True)
         lines = output.splitlines()
@@ -26,6 +25,7 @@ def parse_wifi_networks():
             if len(columns)>9:
                 columns=columns[1:]
                 active = True
+                print('$$$$$$')
 
             bssid    = columns[0]
             ssid     = columns[1]
@@ -83,7 +83,7 @@ def index():
         with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'a') as wpa_conf:
             wpa_conf.write(f'network={{\n  ssid="{selected_network}"\n  psk="{password}"\n}}\n')
     
-    wifi_data = parse_wifi_networks()
+    wifi_data = parse_wifi_list()
     networks = get_available_network_ssids()
     return render_template('index.html', wifi_data=wifi_data, networks_list=networks)
 
