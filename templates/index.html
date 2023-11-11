@@ -43,14 +43,24 @@
         </div>
     </div>
 
-    <form method="post">
-        <select name="network">
-            {% for network in networks_list %}
-                <option value="{{ network }}">{{ network }}</option>
-            {% endfor %}
-        </select>
-        <input type="password" name="password" placeholder="Enter WiFi Password">
-        <button type="submit">Connect</button>
+    <form method="post"> 
+        <div class="form-row">
+
+            <div class="col">
+                <label>networks</label>
+                <select name="network">
+                    {% for network in networks_list %}
+                        <option value="{{ network }}">{{ network }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col">
+                <input type="password" name="password" class="form-control" placeholder="Enter WiFi Password">
+            </div>
+
+            <button type="submit">Connect</button>
+        </div>
     </form>
    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
