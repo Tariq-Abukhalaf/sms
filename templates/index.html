@@ -32,7 +32,7 @@
                             <td>{{ network.MODE }}</td>
                             <td>{{ network.CHAN }}</td>
                             <td>{{ network.RATE }}</td>
-                            <td>{{ network.SIGNAL }}</td>
+                            <td style="background-color: {% if network.SIGNAL|float > 90 %}green{% else %}inherit{% endif %}" >{{ network.SIGNAL }}</td>
                             <td>{{ network.BARS }}</td>
                             <td>{{ network.SECURITY }}</td>
                         </tr>
