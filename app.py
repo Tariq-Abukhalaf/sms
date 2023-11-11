@@ -66,6 +66,7 @@ def get_available_network_ssids():
         for key, value in item.items():
             if key == 'SSID':
                 nts.append(value)
+    print(nts)
     return nts
 
 
