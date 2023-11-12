@@ -11,7 +11,6 @@ def parse_wifi_list():
     try:
         output = subprocess.check_output(['nmcli', 'device', 'wifi', 'list'], text=True)
         lines = output.splitlines()
-        print(lines)
         wifi_networks = []
         for line in lines[1:]:
             columns = line.split()
