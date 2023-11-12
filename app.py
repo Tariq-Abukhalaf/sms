@@ -26,7 +26,7 @@ def parse_wifi_list():
             rate     = columns[4]+' '+columns[5]
             signal   = columns[6]
             bars     = columns[7]
-            security = columns[8]+columns[9]
+            security = columns[8]+' '+columns[9]
 
             wifi_networks.append({
                 "BSSID"   : bssid,
