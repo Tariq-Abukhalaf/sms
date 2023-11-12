@@ -81,10 +81,10 @@ def get_nm_connections():
 def index():
     if request.method == 'POST':
         selected_network = request.form['network']
-        password = request.form['password']
+        password         = request.form['password']
 
-        with open('/etc/wpa_supplicant/wpa_supplicant.conf', 'a') as wpa_conf:
-            wpa_conf.write(f'network={{\n  ssid="{selected_network}"\n  psk="{password}"\n}}\n')
+        print(selected_network)
+        print(password)
     
     wifi_data = parse_wifi_list()
     networks = get_available_network_ssids()
