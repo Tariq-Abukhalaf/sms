@@ -39,6 +39,7 @@ def parse_wifi_list():
                 "SECURITY" : security,
                 "ACTIVE"  : active,
             })
+        print(wifi_networks)
         return wifi_networks
 
     except subprocess.CalledProcessError as e:
@@ -81,9 +82,9 @@ def index():
     if request.method == 'POST':
         selected_network = request.form['network']
         password         = request.form['password']
-
         print(selected_network)
         print(password)
+
     
     wifi_data = parse_wifi_list()
     networks = get_available_network_ssids()
