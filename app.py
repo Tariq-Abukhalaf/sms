@@ -39,7 +39,6 @@ def parse_wifi_list():
                 "SECURITY" : security,
                 "ACTIVE"  : active,
             })
-        print(wifi_networks)
         return wifi_networks
 
     except subprocess.CalledProcessError as e:
